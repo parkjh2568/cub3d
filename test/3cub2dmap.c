@@ -14,6 +14,9 @@
 #define KEY_S 1
 #define KEY_D 2
 
+#define ROW 15
+#define COL 20
+
 typedef struct s_img{
 	void	*img;
 	int		*data;
@@ -30,7 +33,7 @@ typedef struct s_cub{
 	int x;
 	int y;
 
-	int map[6][5];
+	int map[ROW][COL];
 
 }				t_cub;
 
@@ -38,25 +41,25 @@ int	input_key(int key, t_cub *game)
 {
 	if (key == KEY_ESC)
 		exit(0);
-	else if (key == KEY_W && game->x > 1)
+	else if (key == KEY_W && game->map[game->x - 1][game -> y] != 1)
 	{
 		game->map[game->x][game->y] = 0;
 		game->x = game->x - 1;
 		game->map[game->x][game->y] = 2;
 	}
-	else if (key == KEY_S && game->x < 4)
+	else if (key == KEY_S && game->map[game->x + 1][game -> y] != 1)
 	{
 		game->map[game->x][game->y] = 0;
 		game->x = game->x + 1;
 		game->map[game->x][game->y] = 2;
 	}
-	else if (key == KEY_A && game->y > 1)
+	else if (key == KEY_A && game->map[game->x][game -> y - 1] != 1)
 	{
 		game->map[game->x][game->y] = 0;
 		game->y = game->y - 1;
 		game->map[game->x][game->y] = 2;
 	}
-	else if (key == KEY_D && game->y < 3)
+	else if (key == KEY_D && game->map[game->x][game -> y + 1] != 1)
 	{
 		game->map[game->x][game->y] = 0;
 		game->y = game->y + 1;
@@ -85,11 +88,11 @@ void draw_map(t_cub *game, int i, int j, int config)
 		while (l < SQ)
 		{
 			if (config == 1)
-				game->img.data[(i+k)*(50*5) + l + j] = 0xFFFFFF;
+				game->img.data[(i+k)*(SQ*COL) + l + j] = 0xFFFFFF;
 			else if (config == 2)
-				game->img.data[(i+k)*(50*5) + l + j] = 0xFF0000;
+				game->img.data[(i+k)*(SQ*COL) + l + j] = 0xFF0000;
 			else if (config == 0)
-				game->img.data[(i+k)*(50*5) + l + j] = 0x000000;
+				game->img.data[(i+k)*(SQ*COL) + l + j] = 0x000000;
 			l++;
 		}
 		k++;
@@ -102,10 +105,10 @@ int display (t_cub *game)
 	int j;
 
 	i = 0;
-	while(i < 6)
+	while(i < ROW)
 	{
 		j = 0;
-		while(j < 5)
+		while(j < COL)
 		{
 			if (game->map[i][j] == 1)
 				draw_map(game, i, j, 1);
@@ -128,20 +131,29 @@ int main()
 	void *win;
 	t_cub game;
 
-	int ex[6][5] = {
-	{1,1,1,1,1},
-	{1,0,0,0,1},
-	{1,0,0,0,1},
-	{1,0,2,0,1},
-	{1,0,0,0,1},
-	{1,1,1,1,1}
+	int ex[ROW][COL] = {
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+	{1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1},
+	{1,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,0,1},
+	{1,0,2,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
+	{1,0,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1},
+	{1,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,1,1},
+	{1,0,1,0,1,1,0,1,0,1,1,1,1,0,1,1,1,0,0,1},
+	{1,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,1,0,0,1},
+	{1,0,1,0,0,0,1,1,0,1,0,1,1,1,1,0,0,0,0,1},
+	{1,0,1,0,1,1,1,0,0,1,0,0,0,0,1,0,0,1,0,1},
+	{1,0,1,0,0,0,0,0,0,0,0,1,1,0,1,0,0,1,0,1},
+	{1,0,1,0,0,0,0,0,0,0,0,0,1,0,1,1,0,1,0,1},
+	{1,0,1,1,1,0,1,1,1,1,1,0,1,0,0,0,0,0,0,1},
+	{1,0,0,0,0,0,0,0,0,0,1,0,1,1,1,1,1,1,0,1},
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 	};
 	
-	memcpy(game.map,ex,sizeof(int) * 5 * 6);
+	memcpy(game.map,ex,sizeof(int) * COL * ROW);
 
 	game.mlx = mlx_init();
-	game.win = mlx_new_window(game.mlx, 500, 600, "my_first_mlx");
-	game.img.img = mlx_new_image(game.mlx, 250, 300);
+	game.win = mlx_new_window(game.mlx, COL*SQ, ROW*SQ, "my_first_mlx");
+	game.img.img = mlx_new_image(game.mlx, COL*SQ, ROW*SQ);
 	game.img.data = (int *)mlx_get_data_addr(game.img.img, &game.img.bpp, &game.img.size_l, &game.img.endian);
 
 	game.x = 0;
@@ -149,7 +161,7 @@ int main()
 	while(game.map[game.x][game.y] != 2)
 	{
 		game.y++;
-		if (game.x <= 5 && game.y > 4)
+		if (game.x < ROW && game.y >= COL)
 		{
 			game.y = 0;
 			game.x++;

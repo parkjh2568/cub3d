@@ -1,1 +1,1 @@
-gcc -L ./mlx_beta/ 1opentest.c -lmlx -framework OpenGL -framework Appkit
+gcc -L ./mlx_beta/ -----filename------- -lmlx -framework OpenGL -framework Appkit
