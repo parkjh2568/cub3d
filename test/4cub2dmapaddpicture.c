@@ -90,12 +90,8 @@ void draw_map(t_cub *game, int i, int j, int config)
 		l = 0;
 		while (l < SQ)
 		{
-			if (config == 1)
+			if (config == 0)
 				game->img.data[(i+k)*(SQ*COL) + l + j] = 0xFFFFFF;
-			else if (config == 2)
-				game->img.data[(i+k)*(SQ*COL) + l + j] = 0xFF0000;
-			else if (config == 0)
-				game->img.data[(i+k)*(SQ*COL) + l + j] = 0x000000;
 			l++;
 		}
 		k++;
@@ -115,16 +111,13 @@ int display (t_cub *game)
 		j = 0;
 		while(j < COL)
 		{
-			if (game->map[i][j] == 1)
-				draw_map(game, i, j, 1);
+			if (game->map[i][j] == 0)
+				draw_map(game, i, j, 0);
 			else if (game->map[i][j] == 2)
 			{
 				user_y = i;
 				user_x = j;
-				draw_map(game, i, j, 2);
 			}
-			else if (game->map[i][j] == 0)
-				draw_map(game, i, j, 0);
 			j++;
 		}
 		i++;
