@@ -213,14 +213,29 @@ void draw_back_screen(t_cub *game)
 	}
 }
 
-void draw_wall(t_cub *game, int i, int j)
+void draw_wall(t_cub *game, int i, int j, int plan)
 {
 	if (game->flag == 1)
+	{
+		if (plan == X_PLAN)
+			mlx_pixel_put(game->mlx,game->win,i,j,0x616161);
+		else
 			mlx_pixel_put(game->mlx,game->win,i,j,0x000000);
+	}
 	else if (game->flag == 3)
+	{
+		if (plan == X_PLAN)
 			mlx_pixel_put(game->mlx,game->win,i,j,0xffd400);
+		else
+			mlx_pixel_put(game->mlx,game->win,i,j,0xe0c01f);
+	}
 	else if (game->flag == 4)
+	{
+		if (plan == X_PLAN)
 			mlx_pixel_put(game->mlx,game->win,i,j,0x00ff3d);
+		else
+			mlx_pixel_put(game->mlx,game->win,i,j,0x1fe04d);
+	}
 }
 void draw_screen(t_cub *game, double ray_x, double ray_y, int plan,int r)
 {
@@ -237,21 +252,15 @@ void draw_screen(t_cub *game, double ray_x, double ray_y, int plan,int r)
 
 	if (plan == X_PLAN)
 	{
-		trans_x = ray_x - game->x;
-		if(game->ray_dir_x == 0)
-			h = game->old_h;
-		else
-			h = fabs(trans_x / game->ray_dir_x);
+		trans_y = ray_y - game->y;
+		h = fabs(trans_y / game->ray_dir_y);
+
 	}
 	else
 	{
-		trans_y = ray_y - game->y;
-		if(game->ray_dir_y == 0)
-			h = game->old_h;
-		else
-			h = fabs(trans_y / game->ray_dir_y);
+		trans_x = ray_x - game->x;
+		h = fabs(trans_x / game->ray_dir_x);
 	}
-	game->old_h = h;
 	resol_w = 1;
 	resol_h = (ROW*SQ/h) * SQ;
 	draw_start = ROW*SQ/2 - resol_h/2;
@@ -264,7 +273,7 @@ void draw_screen(t_cub *game, double ray_x, double ray_y, int plan,int r)
 	{
 		for(int j = draw_start ;j < draw_end ;j++)
 		{
-			draw_wall(game,i + r,j);
+			draw_wall(game,i + r,j, plan);
 		}
 	}
 }
@@ -294,15 +303,20 @@ void draw_ray(t_cub *game)
 		game->ray_dir_y = game->dir_y + game->plan_y * camera;
 		while(game->map[(int)ray_x/SQ][(int)ray_y/SQ] == 0)
 		{
-		//	mlx_pixel_put(game->mlx,game->win,(int)ray_y/5,(int)ray_x/5,0xffd400);
+			mlx_pixel_put(game->mlx,game->win,(int)ray_y/5,(int)ray_x/5,0xffd400);
 			div_x++;
-			div_y++;
 			ray_x = game->x + div_x*(game->ray_dir_x);
 			if (game->map[(int)ray_x/SQ][(int)ray_y/SQ] == 0)
+			{
 				plan = X_PLAN;
+			}
+			div_y++;
 			ray_y = game->y + div_y*(game->ray_dir_y);
-			if (plan == 0 && game->map[(int)ray_x/SQ][(int)ray_y/SQ] == 0)
+			if (game->map[(int)ray_x/SQ][(int)ray_y/SQ] == 0)
+			{
 				plan = Y_PLAN;
+
+			}
 		}
 		if (plan == X_PLAN)
 			ray_y = game->y + div_y*(game->ray_dir_y);
