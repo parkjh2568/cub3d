@@ -14,7 +14,7 @@
 #define KEY_A 0
 #define KEY_S 1
 #define KEY_D 2
-#define PI 3.14159265358979323846264338327950288419
+#define PI 3.14159265358979323846264338327950288419L
 #define X_PLAN 1
 #define Y_PLAN 2
 #define ROW 15
@@ -44,9 +44,10 @@ typedef struct s_cub{
 	double ray_dir_y;
 	double plan_x;
 	double plan_y;
+	double old_h;
 	int flag;
 	int deg;
-	int total_rot;
+
 
 	int map[ROW][COL];
 
@@ -105,7 +106,7 @@ int	input_key(int key, t_cub *game)
 		game->dir_y = old_dir_x * sin(rot) + old_dir_y * cos(rot);
 		game->plan_x = old_plan_x * cos(rot) - old_plan_y * sin(rot);
 		game->plan_y = old_plan_x * sin(rot) + old_plan_y * cos(rot);
-		game->total_rot += 10;
+
 	}
 	else if (key == KEY_E)
 	{
@@ -113,7 +114,7 @@ int	input_key(int key, t_cub *game)
 		game->dir_y = old_dir_x * sin(rot*-1) + old_dir_y * cos(rot*-1);
 		game->plan_x = old_plan_x * cos(rot*-1) - old_plan_y * sin(rot*-1);
 		game->plan_y = old_plan_x * sin(rot*-1) + old_plan_y * cos(rot*-1);
-		game->total_rot -= 10;
+
 	}
 	return(0);
 }
@@ -160,35 +161,38 @@ void draw_wall(t_cub *game, int i, int j)
 	else if (game->flag == 3)
 			mlx_pixel_put(game->mlx,game->win,i,j,0xffd400);
 	else
-			mlx_pixel_put(game->mlx,game->win,i,j,0xffd400);
+			mlx_pixel_put(game->mlx,game->win,i,j,0x00ff3d);
 }
 void draw_screen(t_cub *game, double ray_x, double ray_y, int plan,int r)
 {
 	double h;
-	double rot;
-	double camera;
+
 	double trans_x;
 	double trans_y;
 
-	double trans_div;
 	int resol_w;
 	int resol_h;
 	int draw_start;
 	int draw_end;
 
-	camera = 2 * r / (SQ * 5) - 1;
-	rot = get_radian((game->total_rot) * -1);
-	trans_div = game->ray_dir_x / game->ray_dir_y;
+
 	if (plan == X_PLAN)
 	{
 		trans_x = ray_x - game->x;
-		h = fabs(trans_x / game->ray_dir_x);
+		if(game->ray_dir_x == 0)
+			h = game->old_h;
+		else
+			h = fabs(trans_x / game->ray_dir_x);
 	}
 	else
 	{
 		trans_y = ray_y - game->y;
-		h = fabs(trans_y / game->ray_dir_y);
+		if(game->ray_dir_y == 0)
+			h = game->old_h;
+		else
+			h = fabs(trans_y / game->ray_dir_y);
 	}
+	game->old_h = h;
 	resol_w = 1;
 	resol_h = (ROW*SQ/h) * SQ;
 	draw_start = ROW*SQ/2 - resol_h/2;
@@ -201,7 +205,7 @@ void draw_screen(t_cub *game, double ray_x, double ray_y, int plan,int r)
 	{
 		for(int j = draw_start ;j < draw_end ;j++)
 		{
-			draw_wall(game,i + r*resol_w,j);
+			draw_wall(game,i + r,j);
 		}
 	}
 }
@@ -300,7 +304,7 @@ int main()
 	game.plan_x = 0;
 	game.plan_y = 0.66;
 	game.deg = 10;
-	game.total_rot = 0;
+
 
 	memcpy(game.map,ex,sizeof(int) * COL * ROW);
 
