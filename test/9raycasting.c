@@ -249,6 +249,8 @@ void draw_screen(t_cub *game, double ray_x, double ray_y, int plan,int r)
 	int draw_start;
 	int draw_end;
 
+// 어차피 양플렌일때 체크하는 거리는 똑같으니까 기울기인 ray_dir_이 0이안되는값으로 채ㅣ킹을해줌
+// 기울기가 0인값을하니까 가운대 메쉬높이가 오버플로우로 측정이 제대로 안되고 그림을 못그림
 
 	if (plan == X_PLAN)
 	{
