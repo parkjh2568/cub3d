@@ -36,6 +36,7 @@ typedef struct s_cub{
 	void *win;
 	t_img img;
 	t_img user_img;
+	t_img mini_map;
 	int x;
 	int y;
 	double dir_x;
@@ -128,15 +129,70 @@ int k_close(t_cub *game)
 
 void draw_player(t_cub *game,int j, int i)
 {
-
 	mlx_pixel_put(game->mlx,game->win,(game->y + j)/5,(game->x + i)/5,0xFF0000);
 	mlx_pixel_put(game->mlx,game->win,(game->y - j)/5,(game->x - i)/5,0xFF0000);
 	mlx_pixel_put(game->mlx,game->win,(game->y + j)/5,(game->x - i)/5,0xFF0000);
 	mlx_pixel_put(game->mlx,game->win,(game->y - j)/5,(game->x + i)/5,0xFF0000);
 
+	for(int kk = 8; kk < 20; kk++)
+	{
+	mlx_pixel_put(game->mlx,game->win,(game->y + game->dir_y * kk)/5,
+			(game->x + game->dir_x * kk)/5, 0x0013d8);
+	}
+}
+void draw_map(t_cub *game, int i, int j, int config)
+{
+	int k, l;
+
+	i = i * SQ/5;
+	j = j * SQ/5;
+
+	k = 0;
+	l = 0;
+	while(k < SQ/5)
+	{
+		l = 0;
+		while (l < SQ/5)
+		{
+			if (config == 0)
+				game->mini_map.data[(i+k)*(SQ/5*COL) + l + j] = 0xFFFFFF;
+			else if (config == 1)
+				game->mini_map.data[(i+k)*(SQ/5*COL) + l + j] = 0x000000;
+			else if (config == 3)
+				game->mini_map.data[(i+k)*(SQ/5*COL) + l + j] = 0xffd400;
+			else if (config == 4)
+				game->mini_map.data[(i+k)*(SQ/5*COL) + l + j] = 0x00ff3d;
+			l++;
+		}
+		k++;
+	}
+}
+void draw_mini_map(t_cub *game)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while(i < ROW)
+	{
+		j = 0;
+		while(j < COL)
+		{
+			if (game->map[i][j] == 1)
+				draw_map(game, i, j, 1);
+			else if (game->map[i][j] == 0)
+				draw_map(game, i, j, 0);
+			else if (game->map[i][j] == 3)
+				draw_map(game, i, j, 3);
+			else if (game->map[i][j] == 4)
+				draw_map(game, i, j, 4);
+			j++;
+		}
+		i++;
+	}
 }
 
-void draw_map(t_cub *game)
+void draw_back_screen(t_cub *game)
 {
 	int k, l;
 
@@ -147,7 +203,10 @@ void draw_map(t_cub *game)
 		l = 0;
 		while (l < COL*SQ)
 		{
-				game->img.data[(k)*(SQ*COL) + l] = 0xFFFFFF;
+			if (k < ROW*SQ/2)
+				game->img.data[(k)*(SQ*COL) + l] = 0xffffff;
+			else
+				game->img.data[(k)*(SQ*COL) + l] = 0xff9729;
 			l++;
 		}
 		k++;
@@ -157,10 +216,10 @@ void draw_map(t_cub *game)
 void draw_wall(t_cub *game, int i, int j)
 {
 	if (game->flag == 1)
-			mlx_pixel_put(game->mlx,game->win,i,j,0xff0000);
+			mlx_pixel_put(game->mlx,game->win,i,j,0x000000);
 	else if (game->flag == 3)
 			mlx_pixel_put(game->mlx,game->win,i,j,0xffd400);
-	else
+	else if (game->flag == 4)
 			mlx_pixel_put(game->mlx,game->win,i,j,0x00ff3d);
 }
 void draw_screen(t_cub *game, double ray_x, double ray_y, int plan,int r)
@@ -235,7 +294,7 @@ void draw_ray(t_cub *game)
 		game->ray_dir_y = game->dir_y + game->plan_y * camera;
 		while(game->map[(int)ray_x/SQ][(int)ray_y/SQ] == 0)
 		{
-			mlx_pixel_put(game->mlx,game->win,(int)ray_y/5,(int)ray_x/5,0xffd400);
+		//	mlx_pixel_put(game->mlx,game->win,(int)ray_y/5,(int)ray_x/5,0xffd400);
 			div_x++;
 			div_y++;
 			ray_x = game->x + div_x*(game->ray_dir_x);
@@ -253,6 +312,7 @@ void draw_ray(t_cub *game)
 	}
 }
 
+
 int display (t_cub *game)
 {
 
@@ -261,10 +321,11 @@ int display (t_cub *game)
 	i = 0;
 	mlx_put_image_to_window(game->mlx,game->win,game->img.img,0,0);
 	draw_ray(game);
-	while(i < SQ/15)
+	mlx_put_image_to_window(game->mlx,game->win,game->mini_map.img,0,0);
+	while(i < SQ/10)
 	{
 		j = 0;
-		while(j < SQ/15)
+		while(j < SQ/10)
 		{
 			draw_player(game,j,i);
 			j++;
@@ -311,10 +372,15 @@ int main()
 	game.mlx = mlx_init();
 	game.win = mlx_new_window(game.mlx, COL*SQ, ROW*SQ, "my_first_mlx");
 	game.img.img = mlx_new_image(game.mlx, COL*SQ, ROW*SQ);
+	game.mini_map.img = mlx_new_image(game.mlx, COL*SQ/5, ROW*SQ/5);
+	game.mini_map.data = (int *)mlx_get_data_addr(game.mini_map.img, &game.mini_map.bpp,
+			&game.mini_map.size_l, &game.mini_map.endian);
 
-	game.user_img.img = mlx_xpm_file_to_image(game.mlx, "./zavala.xpm",&game.user_img.width,&game.user_img.height); 
+	game.user_img.img = mlx_xpm_file_to_image(game.mlx, "./zavala.xpm",
+			&game.user_img.width,&game.user_img.height); 
 
-	game.img.data = (int *)mlx_get_data_addr(game.img.img, &game.img.bpp, &game.img.size_l, &game.img.endian);
+	game.img.data = (int *)mlx_get_data_addr(game.img.img, &game.img.bpp,
+		   	&game.img.size_l, &game.img.endian);
 
 	game.x = 0;
 	game.y = 0;
@@ -334,7 +400,8 @@ int main()
 	game.y = game.y*SQ + SQ/2;
 
 
-	draw_map(&game);
+	draw_back_screen(&game);
+	draw_mini_map(&game);
 	mlx_hook(game.win, 2, 0, &input_key, &game);
 
 
