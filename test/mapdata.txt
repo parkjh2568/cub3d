@@ -1,0 +1,1 @@
+Game->map.data[(I+k)(SQ/5*COL) +l + j]

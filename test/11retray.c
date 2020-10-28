@@ -19,8 +19,6 @@
 #define Y_PLAN 2
 #define ROW 15
 #define COL 20
-#define screen_width COL*SQ
-#define screen_height ROW*SQ
 
 typedef struct s_img{
 	void	*img;
@@ -39,8 +37,8 @@ typedef struct s_cub{
 	t_img img;
 	t_img user_img;
 	t_img mini_map;
-	int x;
-	int y;
+	double x;
+	double y;
 	double dir_x;
 	double dir_y;
 	double ray_dir_x;
@@ -215,118 +213,103 @@ void draw_back_screen(t_cub *game)
 	}
 }
 
-void draw_wall(t_cub *game, int i, int j, int plan)
-{
-	if (game->flag == 1)
-	{
-		if (plan == X_PLAN)
-			mlx_pixel_put(game->mlx,game->win,i,j,0x616161);
-		else
-			mlx_pixel_put(game->mlx,game->win,i,j,0x000000);
-	}
-	else if (game->flag == 3)
-	{
-		if (plan == X_PLAN)
-			mlx_pixel_put(game->mlx,game->win,i,j,0xffd400);
-		else
-			mlx_pixel_put(game->mlx,game->win,i,j,0xe0c01f);
-	}
-	else if (game->flag == 4)
-	{
-		if (plan == X_PLAN)
-			mlx_pixel_put(game->mlx,game->win,i,j,0x00ff3d);
-		else
-			mlx_pixel_put(game->mlx,game->win,i,j,0x1fe04d);
-	}
-}
-void draw_screen(t_cub *game, double ray_x, double ray_y, int plan,int r)
-{
-	double h;
-
-	double trans_x;
-	double trans_y;
-
-	int resol_w;
-	int resol_h;
-	int draw_start;
-	int draw_end;
-
-// 어차피 양플렌일때 체크하는 거리는 똑같으니까 기울기인 ray_dir_이 0이안되는값으로 채ㅣ킹을해줌
-// 기울기가 0인값을하니까 가운대 메쉬높이가 오버플로우로 측정이 제대로 안되고 그림을 못그림
-
-	if (plan == X_PLAN)
-	{
-		trans_y = ray_y - game->y;
-		h = fabs(trans_y / game->ray_dir_y);
-
-	}
-	else
-	{
-		trans_x = ray_x - game->x;
-		h = fabs(trans_x / game->ray_dir_x);
-	}
-	resol_w = 1;
-	resol_h = (ROW*SQ/h) * SQ;
-	draw_start = ROW*SQ/2 - resol_h/2;
-	if (draw_start < 0)
-		draw_start = 0;
-	draw_end = ROW*SQ/2 + resol_h/2;
-	if (draw_end >= ROW*SQ)
-		draw_end = ROW*SQ - 1;
-	for(int i = 0;i < resol_w;i++)
-	{
-		for(int j = draw_start ;j < draw_end ;j++)
-		{
-			draw_wall(game,i + r,j, plan);
-		}
-	}
-}
 
 void draw_ray(t_cub *game)
 {
-	double ray_x;
-	double ray_y;
-	double div_x;
-	double div_y;
 	int w;
-	int h;
-	double camera;
-	double r;
-	int plan;
-	w = SQ * COL;
-	h = SQ * 5;
-	plan = 0;
-	while(r < w)
-	{
-		camera = 2 * r / (SQ * COL) - 1;
-		div_x = 0;
-		div_y = 0;
-		ray_x = game->x;
-		ray_y = game->y;
-		game->ray_dir_x = game->dir_x + game->plan_x * camera;
-		game->ray_dir_y = game->dir_y + game->plan_y * camera;
-		while(game->map[(int)ray_x/SQ][(int)ray_y/SQ] == 0)
-		{
-			mlx_pixel_put(game->mlx,game->win,(int)ray_y/5,(int)ray_x/5,0xffd400);
-			div_x++;
-			ray_x = game->x + div_x*(game->ray_dir_x);
-			if (game->map[(int)ray_x/SQ][(int)ray_y/SQ] == 0)
-			{
-				plan = X_PLAN;
-			}
-			div_y++;
-			ray_y = game->y + div_y*(game->ray_dir_y);
-			if (game->map[(int)ray_x/SQ][(int)ray_y/SQ] == 0)
-			{
-				plan = Y_PLAN;
 
-			}
+	w = COL*SQ;
+
+	for(int x = 0; x < w; x++)
+	{
+		double camera = 2 * x / w - 1;
+		double ray_dir_x = game->dir_x + game->plan_x * camera;
+		double ray_dir_y = game->dir_y + game->plan_y * camera;
+		int map_x = (int)game->x;
+		int map_y = (int)game->y;
+		double side_dist_x;
+		double side_dist_y;
+		double delta_dist_x = fabs(1 / ray_dir_x);
+		double delta_dist_y = fabs(1 / ray_dir_y);
+		double perp_wall_dist;
+		int		step_x;
+		int		step_y;
+
+		int		hit = 0;
+		int		side;
+
+		unsigned int color;
+
+		if (ray_dir_x < 0)
+		{
+			step_x = -1;
+			side_dist_x = (game->x - map_x) * delta_dist_x;
 		}
-		if (plan == X_PLAN)
-			ray_y = game->y + div_y*(game->ray_dir_y);
-		game->flag = game->map[(int)ray_x/SQ][(int)ray_y/SQ];
-		draw_screen(game,ray_x,ray_y,plan,r);
-		r++;
+		else
+		{
+			step_x = 1;
+			side_dist_x = (map_x + 1.0 - game->x) * delta_dist_x;
+		}
+		if (ray_dir_y < 0)
+		{
+			step_y = -1;
+			side_dist_y = (game->y - map_y) * delta_dist_y;
+		}
+		else
+		{
+			step_x = 1;
+			side_dist_y = (map_y + 1.0 - game->y) * delta_dist_y;
+		}
+
+		while (hit == 0)
+		{
+
+			if (side_dist_x < side_dist_y)
+			{
+				side_dist_x += delta_dist_x;
+				map_x += step_x;
+				side = 0;
+			}
+			else
+			{
+				side_dist_y += delta_dist_y;
+				map_y += step_y;
+				side = 1;
+			}
+
+			if (game->map[map_x][map_y] > 0)
+				hit = 1;
+		}
+
+		if (side == 0)
+			perp_wall_dist = (map_x - game->x + (1 - step_x) / 2) / ray_dir_x;
+		else
+			perp_wall_dist = (map_y - game->y + (1 - step_y) / 2) / ray_dir_y;
+
+		int line_height = (int)(ROW*SQ / perp_wall_dist);
+		int draw_start = -line_height / 2 + ROW*SQ/2;
+		if (draw_start <0)
+			draw_start = 0;
+		int draw_end = line_height/2 + ROW*SQ/2;
+		if (draw_end >= ROW*SQ)
+			draw_end = ROW*SQ - 1;
+
+		switch(game->map[map_x][map_y])
+		{
+			case 1: color = 0x616161; break;
+			case 4: color = 0xffd400; break;
+			case 3: color = 0x00ff3d; break;
+			default: color = 0x000000; break;
+		}
+
+		if (side == 1)
+			color = color / 2;
+
+		for(int j = draw_start; j < draw_end; j++)
+		{
+			mlx_pixel_put(game->mlx,game->win,x,j,color);
+		}
+
 	}
 }
 
@@ -402,7 +385,7 @@ int main()
 
 	game.x = 0;
 	game.y = 0;
-	while(game.map[game.x][game.y] != 2)
+	while(game.map[(int)game.x][(int)game.y] != 2)
 	{
 		game.y++;
 		if (game.x < ROW && game.y >= COL)
@@ -411,9 +394,8 @@ int main()
 			game.x++;
 		}
 	}
-	game.map[game.x][game.y] = 0;
+	game.map[(int)game.x][(int)game.y] = 0;
 
-	printf("x = %d, y = %d",game.x,game.y);
 	game.x = game.x*SQ + SQ/2;
 	game.y = game.y*SQ + SQ/2;
 

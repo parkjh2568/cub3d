@@ -19,8 +19,6 @@
 #define Y_PLAN 2
 #define ROW 15
 #define COL 20
-#define screen_width COL*SQ
-#define screen_height ROW*SQ
 
 typedef struct s_img{
 	void	*img;
@@ -51,6 +49,12 @@ typedef struct s_cub{
 	int flag;
 	int deg;
 
+	int old_x;
+	int old_y;
+	double start_wall;
+	double end_wall;
+	int start_r;
+	int end_r;
 
 	int map[ROW][COL];
 
@@ -91,17 +95,17 @@ int	input_key(int key, t_cub *game)
 	else if (key == KEY_S && game->map[(int)(game->x - mov_x)/SQ][(int)(game->y - mov_y)/SQ] == 0)
 	{
 		game->x -=  mov_x;
-		game->y -=  mov_y;	
+		game->y -=  mov_y;
 	}
 	else if (key == KEY_A && game->map[(int)(game->x - mov_y)/SQ][(int)(game->y + mov_x)/SQ] == 0)
 	{
 		game->x -=  mov_y;
-		game->y +=  mov_x;	
+		game->y +=  mov_x;
 	}
 	else if (key == KEY_D&& game->map[(int)(game->x + mov_y)/SQ][(int)(game->y - mov_x)/SQ] == 0)
 	{
 		game->x +=  mov_y;
-		game->y -=  mov_x;	
+		game->y -=  mov_x;
 	}
 	else if (key == KEY_Q)
 	{
@@ -215,36 +219,41 @@ void draw_back_screen(t_cub *game)
 	}
 }
 
-void draw_wall(t_cub *game, int i, int j, int plan)
+void draw_wall(t_cub *game, int r, int resol_w, int plan, int t_x,int t_y, int draw_start, int draw_end)
 {
-	if (game->flag == 1)
+	for(int j = draw_start ;j < draw_end ;j++)
 	{
-		if (plan == X_PLAN)
-			mlx_pixel_put(game->mlx,game->win,i,j,0x616161);
-		else
-			mlx_pixel_put(game->mlx,game->win,i,j,0x000000);
-	}
-	else if (game->flag == 3)
-	{
-		if (plan == X_PLAN)
-			mlx_pixel_put(game->mlx,game->win,i,j,0xffd400);
-		else
-			mlx_pixel_put(game->mlx,game->win,i,j,0xe0c01f);
-	}
-	else if (game->flag == 4)
-	{
-		if (plan == X_PLAN)
-			mlx_pixel_put(game->mlx,game->win,i,j,0x00ff3d);
-		else
-			mlx_pixel_put(game->mlx,game->win,i,j,0x1fe04d);
+		if (game->flag == 1)
+		{
+			mlx_pixel_put(game->mlx,game->win,r,j,
+			game->user_img.data[(t_x*(j-draw_start) * game->user_img.width + t_y)]);
+		}
+		else if (game->flag == 3)
+		{
+			if (plan == X_PLAN)
+				mlx_pixel_put(game->mlx,game->win,r,j,0xffd400);
+			else
+				mlx_pixel_put(game->mlx,game->win,r,j,0xe0c01f);
+		}
+		else if (game->flag == 4)
+		{
+			if (plan == X_PLAN)
+				mlx_pixel_put(game->mlx,game->win,r,j,0x00ff3d);
+			else
+				mlx_pixel_put(game->mlx,game->win,r,j,0x1fe04d);
+		}
 	}
 }
+
 void draw_screen(t_cub *game, double ray_x, double ray_y, int plan,int r)
 {
 	double h;
 
 	double trans_x;
 	double trans_y;
+
+	double	ttrans_x;
+	double ttrans_y;
 
 	int resol_w;
 	int resol_h;
@@ -265,21 +274,22 @@ void draw_screen(t_cub *game, double ray_x, double ray_y, int plan,int r)
 		trans_x = ray_x - game->x;
 		h = fabs(trans_x / game->ray_dir_x);
 	}
+
 	resol_w = 1;
 	resol_h = (ROW*SQ/h) * SQ;
+
+	ttrans_y = ray_y - (int)ray_y;
+	ttrans_x = game->user_img.height / resol_h;
+	ttrans_y = game->user_img.width * ttrans_y;
+
 	draw_start = ROW*SQ/2 - resol_h/2;
 	if (draw_start < 0)
 		draw_start = 0;
 	draw_end = ROW*SQ/2 + resol_h/2;
 	if (draw_end >= ROW*SQ)
 		draw_end = ROW*SQ - 1;
-	for(int i = 0;i < resol_w;i++)
-	{
-		for(int j = draw_start ;j < draw_end ;j++)
-		{
-			draw_wall(game,i + r,j, plan);
-		}
-	}
+		draw_wall(game,r,resol_w, plan, (int)ttrans_x, (int)ttrans_y, draw_start, draw_end);
+
 }
 
 void draw_ray(t_cub *game)
@@ -307,6 +317,7 @@ void draw_ray(t_cub *game)
 		game->ray_dir_y = game->dir_y + game->plan_y * camera;
 		while(game->map[(int)ray_x/SQ][(int)ray_y/SQ] == 0)
 		{
+			game->end_wall = ray_y;
 			mlx_pixel_put(game->mlx,game->win,(int)ray_y/5,(int)ray_x/5,0xffd400);
 			div_x++;
 			ray_x = game->x + div_x*(game->ray_dir_x);
@@ -324,8 +335,27 @@ void draw_ray(t_cub *game)
 		}
 		if (plan == X_PLAN)
 			ray_y = game->y + div_y*(game->ray_dir_y);
-		game->flag = game->map[(int)ray_x/SQ][(int)ray_y/SQ];
-		draw_screen(game,ray_x,ray_y,plan,r);
+		if(r == 0)
+		{
+			game->old_x = (int)ray_x/SQ;
+			game->old_y = (int)ray_y/SQ;
+			game->start_wall = ray_y;
+			game->start_r = 0;
+		}
+		else if(game->old_x != (int)ray_x/SQ || game->old_y != (int)ray_y/SQ)
+		{
+			game->end_r = r - 1;
+
+			game->flag = game->map[(int)ray_x/SQ][(int)ray_y/SQ];
+			draw_screen(game,ray_x,ray_y,plan,r);
+
+
+			game->old_x = (int)ray_x/SQ;
+			game->old_y = (int)ray_y/SQ;
+			game->start_wall = ray_y;
+			game->start_r = r;
+		}
+
 		r++;
 	}
 }
@@ -350,6 +380,7 @@ int display (t_cub *game)
 		}
 		i++;
 	}
+
 
 	return(0);
 }
@@ -394,12 +425,16 @@ int main()
 	game.mini_map.data = (int *)mlx_get_data_addr(game.mini_map.img, &game.mini_map.bpp,
 			&game.mini_map.size_l, &game.mini_map.endian);
 
-	game.user_img.img = mlx_xpm_file_to_image(game.mlx, "./zavala.xpm",
-			&game.user_img.width,&game.user_img.height); 
+	game.user_img.img = mlx_xpm_file_to_image(game.mlx, "./crosssky.xpm",
+			&game.user_img.width,&game.user_img.height);
+
+	game.user_img.data = (int *)mlx_get_data_addr(game.user_img.img, &game.user_img.bpp,
+			&game.user_img.size_l, &game.user_img.endian);
 
 	game.img.data = (int *)mlx_get_data_addr(game.img.img, &game.img.bpp,
 		   	&game.img.size_l, &game.img.endian);
-
+	game.old_map_config = -1;
+	game.start_wall = 0;
 	game.x = 0;
 	game.y = 0;
 	while(game.map[game.x][game.y] != 2)
