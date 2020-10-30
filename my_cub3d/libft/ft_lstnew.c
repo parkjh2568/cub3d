@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/29 15:21:00 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/28 20:34:32 by junhypar         ###   ########.fr       */
+/*   Created: 2020/07/03 09:04:47 by junhypar          #+#    #+#             */
+/*   Updated: 2020/07/06 14:51:09 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "libft.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+t_list	*ft_lstnew(void *content)
 {
-	char		*d;
-	const char	*s;
+	t_list		*out;
 
-	if (!dst && !src)
+	if (!(out = malloc(sizeof(t_list))))
 		return (NULL);
-	d = (char *)dst;
-	s = (const char *)src;
-	while (n--)
-		d[n] = s[n];
-	return (dst);
+	out->content = content;
+	out->next = NULL;
+	return (out);
 }

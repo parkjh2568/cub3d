@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 12:03:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/30 15:39:20 by junhypar         ###   ########.fr       */
+/*   Created: 2020/07/03 09:17:05 by junhypar          #+#    #+#             */
+/*   Updated: 2020/07/06 14:42:28 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include "libft.h"
 
-int main(int argc, char *argv[])
+void	ft_lstadd_front(t_list **alst, t_list *new)
 {
-	t_game	g;
-	int		er;
+	t_list	*ot;
 
-/*	if (argc == 3 || argc < 2 || argc > 3)
-		ft_error(INPUT_ERROR);
-	if (!(g.mlx = mlx_init()))
-		ft_error(MLX_ERROR);*/
-	if ((er = ft_read_map(&g, /*argv[1]*/"map.cub")))
-	//	ft_error(er);
-		printf("er = %d",er);
-	printf("\n width = %d, height= = %d",g.width, g.height);
-	return(0);
+	if (*alst == NULL)
+		*alst = new;
+	else
+	{
+		ot = *alst;
+		new->next = ot;
+		*alst = new;
+	}
 }

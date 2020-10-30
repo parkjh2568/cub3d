@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 12:03:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/30 15:39:20 by junhypar         ###   ########.fr       */
+/*   Created: 2020/07/03 09:21:13 by junhypar          #+#    #+#             */
+/*   Updated: 2020/07/06 14:42:46 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include "libft.h"
 
-int main(int argc, char *argv[])
+int	ft_lstsize(t_list *lst)
 {
-	t_game	g;
-	int		er;
+	t_list	*nt;
+	int		i;
 
-/*	if (argc == 3 || argc < 2 || argc > 3)
-		ft_error(INPUT_ERROR);
-	if (!(g.mlx = mlx_init()))
-		ft_error(MLX_ERROR);*/
-	if ((er = ft_read_map(&g, /*argv[1]*/"map.cub")))
-	//	ft_error(er);
-		printf("er = %d",er);
-	printf("\n width = %d, height= = %d",g.width, g.height);
-	return(0);
+	if (!lst)
+		return (0);
+	i = 1;
+	nt = lst;
+	while (nt->next)
+	{
+		i++;
+		nt = nt->next;
+	}
+	return (i);
 }

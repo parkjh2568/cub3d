@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 12:03:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/30 15:39:20 by junhypar         ###   ########.fr       */
+/*   Created: 2020/05/30 11:02:12 by junhypar          #+#    #+#             */
+/*   Updated: 2020/10/30 13:42:31 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include "libft.h"
 
-int main(int argc, char *argv[])
+size_t		ft_strlcpy(char *dest, char *src, size_t size)
 {
-	t_game	g;
-	int		er;
+	size_t a;
+	size_t b;
 
-/*	if (argc == 3 || argc < 2 || argc > 3)
-		ft_error(INPUT_ERROR);
-	if (!(g.mlx = mlx_init()))
-		ft_error(MLX_ERROR);*/
-	if ((er = ft_read_map(&g, /*argv[1]*/"map.cub")))
-	//	ft_error(er);
-		printf("er = %d",er);
-	printf("\n width = %d, height= = %d",g.width, g.height);
-	return(0);
+	if (!dest || !src)
+		return (0);
+	a = 0;
+	b = 0;
+	if (size != 0)
+	{
+		while (src[a] && a < size - 1)
+		{
+			dest[a] = src[a];
+			a++;
+		}
+		dest[a] = '\0';
+	}
+	while (src[b])
+	{
+		b++;
+	}
+	return (b);
 }

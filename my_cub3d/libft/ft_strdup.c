@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 12:03:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/30 15:39:20 by junhypar         ###   ########.fr       */
+/*   Created: 2020/06/04 14:51:06 by junhypar          #+#    #+#             */
+/*   Updated: 2020/07/01 10:35:43 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include <stdlib.h>
 
-int main(int argc, char *argv[])
+char		*ft_strdup(char *src)
 {
-	t_game	g;
-	int		er;
+	char	*a;
+	int		b;
 
-/*	if (argc == 3 || argc < 2 || argc > 3)
-		ft_error(INPUT_ERROR);
-	if (!(g.mlx = mlx_init()))
-		ft_error(MLX_ERROR);*/
-	if ((er = ft_read_map(&g, /*argv[1]*/"map.cub")))
-	//	ft_error(er);
-		printf("er = %d",er);
-	printf("\n width = %d, height= = %d",g.width, g.height);
-	return(0);
+	b = 0;
+	while (src[b])
+		b++;
+	a = (char *)malloc(sizeof(char) * (b + 1));
+	if (!a)
+		return (NULL);
+	b = 0;
+	while (src[b])
+	{
+		a[b] = src[b];
+		b++;
+	}
+	a[b] = 0;
+	return (a);
 }

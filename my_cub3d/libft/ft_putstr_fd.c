@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 12:03:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/30 15:39:20 by junhypar         ###   ########.fr       */
+/*   Created: 2020/07/01 13:55:48 by junhypar          #+#    #+#             */
+/*   Updated: 2020/07/11 14:36:28 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include "libft.h"
 
-int main(int argc, char *argv[])
+void	ft_putstr_fd(char *s, int fd)
 {
-	t_game	g;
-	int		er;
+	int i;
 
-/*	if (argc == 3 || argc < 2 || argc > 3)
-		ft_error(INPUT_ERROR);
-	if (!(g.mlx = mlx_init()))
-		ft_error(MLX_ERROR);*/
-	if ((er = ft_read_map(&g, /*argv[1]*/"map.cub")))
-	//	ft_error(er);
-		printf("er = %d",er);
-	printf("\n width = %d, height= = %d",g.width, g.height);
-	return(0);
+	if (s)
+	{
+		i = 0;
+		while (s[i])
+		{
+			write(fd, &s[i], 1);
+			i++;
+		}
+	}
 }

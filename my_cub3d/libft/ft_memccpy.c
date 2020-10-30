@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 12:03:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/30 15:39:20 by junhypar         ###   ########.fr       */
+/*   Created: 2020/06/29 15:39:43 by junhypar          #+#    #+#             */
+/*   Updated: 2020/07/06 20:13:32 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include "libft.h"
 
-int main(int argc, char *argv[])
+void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
 {
-	t_game	g;
-	int		er;
+	unsigned char	*d;
+	unsigned char	*s;
+	unsigned int	i;
+	unsigned char	cc;
 
-/*	if (argc == 3 || argc < 2 || argc > 3)
-		ft_error(INPUT_ERROR);
-	if (!(g.mlx = mlx_init()))
-		ft_error(MLX_ERROR);*/
-	if ((er = ft_read_map(&g, /*argv[1]*/"map.cub")))
-	//	ft_error(er);
-		printf("er = %d",er);
-	printf("\n width = %d, height= = %d",g.width, g.height);
-	return(0);
+	i = 0;
+	d = (unsigned char *)dest;
+	s = (unsigned char *)src;
+	cc = (unsigned char)c;
+	while (i < n)
+	{
+		d[i] = s[i];
+		if (s[i] == cc)
+			return (&dest[++i]);
+		i++;
+	}
+	return (0);
 }

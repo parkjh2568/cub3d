@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 10:42:11 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/28 20:58:39 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/10/30 15:51:18 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <math.h>
 # include <string.h>
 # include "./mlx/mlx.h"
+# include "./libft/libft.h"
 
 # define KEY_ESC 53
 # define KEY_Q 12
@@ -31,6 +32,23 @@
 # define KEY_D 2
 # define X_PLAN 0
 # define Y_PLAN 1
+
+# define INPUT_ERROR 1
+# define MLX_ERROR 2
+# define MAP_FILE_OPEN_ERROR 3
+# define GNL_ERROR 4
+# define WRONG_MAP 5
+# define WRONG_RESOL_INPUT 6
+
+# define FLOOR 0
+# define CEILL 1
+
+# define NO 0
+# define SO 1
+# define WE 2
+# define EA 3
+# define S 4
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100
 # endif
@@ -71,11 +89,7 @@ typedef struct	s_game
 	void		*mlx;
 	void		*win;
 	t_img		img;
-	t_img		no_w;
-	t_img		so_w;
-	t_img		we_w;
-	t_img		ea_w;
-	t_img		sp_w;
+	t_img		wall[5];
 	unsigned int floor;
 	unsigned int ceill;
 
@@ -99,18 +113,19 @@ typedef struct	s_game
 	double		old_plan_x;
 	double		old_plan_y;
 
-	int			map[25][25];
+	int			max_long;
+	char		*map_all;
+	char		**map;
+
+	unsigned int	color[2];
 }				t_game;
 
 int				get_next_line(int fd, char **line);
-size_t			ft_strlcpy(char *dest, char *src, size_t size);
-int				ft_strlen(char *str);
-char			*ft_strdup(char *src);
-char			*ft_strjoin(char *s1, char *s2);
 double			get_radian(int deg);
-int				display(t_game *g);
-void			draw_screen(t_game *g, t_raycast *ray, int r);
-void			cub3d(t_game *g);
-void			*ft_memcpy(void *dst, const void *src, size_t n);
-void			free_map(t_game *g);
+void			ft_error(int err_code);
+int				ft_read_map(t_game *g, char *map_name);
+int				map_resol(char *out, t_game *g);
+void			no_space(char *out, int *i);
+int				skip_resol_word(char *out, int *i);
+int				check_remain(char *out, int i);
 #endif

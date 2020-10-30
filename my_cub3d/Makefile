@@ -6,31 +6,39 @@
 #    By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/28 10:41:18 by junhypar          #+#    #+#              #
-#    Updated: 2020/10/28 20:32:41 by junhypar         ###   ########.fr        #
+#    Updated: 2020/10/30 15:01:19 by junhypar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= cub3D
 
-SRCS	= ./gnl/get_next_line.c ./gnl/get_next_line_utils.c ./utils/ft_get_radian.c ./main.c ./cub3d.c ./utils/ft_memcpy.c ./ft_draw_screen.c ./ft_display.c
+LIBNAME = libcub3D.a
+
+SRCS	= ./gnl/get_next_line.c ./gnl/get_next_line_utils.c ./utils/ft_get_radian.c main.c ./utils/ft_error.c ./utils/ft_readmap.c ./utils/ft_dividemap.c ./utils/ft_spacecntl.c
 
 OBJS	= ${SRCS:.c=.o}
 
 CC		= gcc
 
-CFLAG	= -Wall -Wextra -Werror -I.
+CFLAG	= -Wall -Wextra -Werror
 
 CFLAG2	= -Lmlx -lmlx -framework OpenGL -framework AppKit -lm
 
 all: ${NAME}
 
-${NAME}:
-		${CC} ${CFLAG} -o ${NAME} ${SRCS} ${CFLAG2} 
+${NAME}:	${OBJS}
+			$(MAKE) bonus -C ./libft
+			cp libft/libft.a ${LIBNAME}
+			ar rc ${LIBNAME} ${OBJS}
+			${CC} ${CFLAG} ${CFLAG2} -o ${NAME} -L. -l${NAME}
 
 clean:
+		$(MAKE) clean -C ./libft
 		rm -f ${OBJS}
+		rm -f ${LIBNAME}
 
 fclean:	clean
+		$(MAKE) fclean -C ./libft
 		rm -f ${NAME}
 
 re:		fclean all
