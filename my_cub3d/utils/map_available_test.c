@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_radian.c                                    :+:      :+:    :+:   */
+/*   map_available_test.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/28 18:40:42 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 14:54:52 by junhypar         ###   ########.fr       */
+/*   Created: 2020/11/06 15:28:55 by junhypar          #+#    #+#             */
+/*   Updated: 2020/11/06 15:52:39 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-double	get_radian(int deg)
-{
-	double cal;
+#include "../cub3d.h"
 
-	cal = deg * (3.14159265358979323846264338327950288419 / 180);
-	return (deg);
+int		map_available_test(t_game *g)
+{
+	return (0);
 }

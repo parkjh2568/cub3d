@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 13:30:18 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 14:40:10 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 15:51:19 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_enter_strdup(char *str)
 	char	*out;
 
 	len = ft_strlen(str);
-	if(!(out = malloc(sizeof(char) * (len + 2))))
+	if (!(out = malloc(sizeof(char) * (len + 2))))
 		return (0);
 	ft_strlcpy(out, str, len + 1);
 	out[len] = '\n';
@@ -37,7 +37,7 @@ int		init_map(char *out, t_game *g)
 		g->row = len;
 	g->col = g->col + 1;
 	g->map_all = ft_strjoin(g->map_all, out);
-	if(!(g->map_all = ft_enter_strdup(g->map_all)))
+	if (!(g->map_all = ft_enter_strdup(g->map_all)))
 		return (MAP_IS_NOT_AVAILABLE);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 10:42:11 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 14:40:14 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 15:49:20 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,4 +137,6 @@ int				input_bg_color(char *out, t_game *g, int flag);
 void			find_rest(char *out, int *i);
 void			free_all(t_game *g);
 int				init_map(char *out, t_game *g);
+int				map_available_test(t_game *g);
+int				map_init_and_available_test(t_game *g);
 #endif

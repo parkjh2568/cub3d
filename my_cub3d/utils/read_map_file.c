@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 11:18:03 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 14:36:12 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 15:55:12 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		divdie_map_info(char *out, t_game *g)
 	int i;
 
 	i = 0;
-	while(out[i] == ' ')
+	while (out[i] == ' ')
 		i++;
 	if (out[i] == 'R' && out[i + 1] == ' ')
 		return (map_resol(&out[i + 2], g));
@@ -44,7 +44,7 @@ int		divide_map_start(char *out, t_game *g, int *cnt)
 
 	i = 0;
 	no_space(out, &i);
-	if (out[i] == '\0' && g->col == 0)
+	if (out[i] == '\0')
 	{
 		if (*cnt <= 8)
 			*cnt = *cnt - 1;
@@ -60,13 +60,13 @@ int		divide_map_start(char *out, t_game *g, int *cnt)
 int		check_error(int gnl_config, int divide_config)
 {
 	if (gnl_config == -1)
-		return(GNL_ERROR);
+		return (GNL_ERROR);
 	if (divide_config != 0)
-		return(divide_config);
+		return (divide_config);
 	return (0);
 }
 
-int ft_read_map(t_game *g, char *map_name)
+int		ft_read_map(t_game *g, char *map_name)
 {
 	int		fd;
 	char	*out;
@@ -76,17 +76,17 @@ int ft_read_map(t_game *g, char *map_name)
 
 	cnt = 0;
 	fd = open(map_name, O_RDONLY);
-	if(fd < 0)
+	if (fd < 0)
 		return (MAP_FILE_OPEN_ERROR);
-	while(1)
+	while (1)
 	{
 		gnl_config = get_next_line(fd, &out);
 		if (gnl_config == -1)
-			break;
+			break ;
 		cnt++;
 		divide_config = divide_map_start(out, g, &cnt);
 		if (gnl_config == 0 || divide_config != 0)
-			break;
+			break ;
 		free(out);
 	}
 	free(out);

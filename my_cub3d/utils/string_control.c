@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 12:23:50 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 13:24:05 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 15:54:10 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	no_space(char *out, int *i)
 {
-	while(out[*i] == ' ')
+	while (out[*i] == ' ')
 		*i = *i + 1;
 }
 
 void	find_rest(char *out, int *i)
 {
-	while(out[*i] != ',')
+	while (out[*i] != ',')
 		*i = *i + 1;
 	*i = *i + 1;
 	no_space(&out[*i], i);
@@ -28,7 +28,7 @@ void	find_rest(char *out, int *i)
 
 int		skip_resol_word(char *out, int *i, int flag)
 {
-	while(out[*i] != ' ')
+	while (out[*i] != ' ')
 	{
 		if (flag == 1 && out[*i] == ',')
 			return (0);
@@ -51,10 +51,10 @@ void	word_dup(char *out, t_game *g, int *i, int flag)
 	start = *i;
 	k = 0;
 	j = 0;
-	while(out[*i] != ' ')
+	while (out[*i] != ' ')
 	{
 		if (out[*i] == '\0')
-				break;
+			break ;
 		*i = *i + 1;
 		j++;
 	}

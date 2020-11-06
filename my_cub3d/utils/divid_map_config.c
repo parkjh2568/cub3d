@@ -6,13 +6,13 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 12:04:53 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 13:24:07 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 15:50:28 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int map_resol(char *out, t_game *g)
+int		map_resol(char *out, t_game *g)
 {
 	int i;
 	int config;
@@ -35,7 +35,7 @@ int map_resol(char *out, t_game *g)
 	return (0);
 }
 
-int input_wall_name(char *out, t_game *g, int flag)
+int		input_wall_name(char *out, t_game *g, int flag)
 {
 	int i;
 
@@ -48,7 +48,7 @@ int input_wall_name(char *out, t_game *g, int flag)
 	return (0);
 }
 
-int	input_bg_color2(char *out, t_game *g, int flag, int i)
+int		input_bg_color2(char *out, t_game *g, int flag, int i)
 {
 	unsigned int	j;
 	int				config;
@@ -65,7 +65,7 @@ int	input_bg_color2(char *out, t_game *g, int flag, int i)
 	return (0);
 }
 
-int input_bg_color(char *out, t_game *g, int flag)
+int		input_bg_color(char *out, t_game *g, int flag)
 {
 	int				i;
 	unsigned int	j;
