@@ -6,7 +6,7 @@
 #    By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/28 10:41:18 by junhypar          #+#    #+#              #
-#    Updated: 2020/10/30 15:01:19 by junhypar         ###   ########.fr        #
+#    Updated: 2020/11/06 14:36:38 by junhypar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= cub3D
 
 LIBNAME = libcub3D.a
 
-SRCS	= ./gnl/get_next_line.c ./gnl/get_next_line_utils.c ./utils/ft_get_radian.c main.c ./utils/ft_error.c ./utils/ft_readmap.c ./utils/ft_dividemap.c ./utils/ft_spacecntl.c
+SRCS	= ./gnl/get_next_line.c ./gnl/get_next_line_utils.c ./utils/ft_get_radian.c main.c ./utils/ft_error.c ./utils/read_map_file.c ./utils/divid_map_config.c ./utils/string_control.c ./utils/init_map.c
 
 OBJS	= ${SRCS:.c=.o}
 

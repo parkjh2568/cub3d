@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_readmap.c                                       :+:      :+:    :+:   */
+/*   read_map_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 11:18:03 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/30 16:42:22 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 14:36:12 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,38 @@ int		divdie_map_info(char *out, t_game *g)
 	if (out[i] == 'R' && out[i + 1] == ' ')
 		return (map_resol(&out[i + 2], g));
 	else if (out[i] == 'N' && out[i + 1] == 'O' && out[i + 2] == ' ')
-		return (map_wall(&out[i + 3], g, NO));
+		return (input_wall_name(&out[i + 3], g, NO));
+	else if (out[i] == 'S' && out[i + 1] == 'O' && out[i + 2] == ' ')
+		return (input_wall_name(&out[i + 3], g, SO));
+	else if (out[i] == 'W' && out[i + 1] == 'E' && out[i + 2] == ' ')
+		return (input_wall_name(&out[i + 3], g, WE));
+	else if (out[i] == 'E' && out[i + 1] == 'A' && out[i + 2] == ' ')
+		return (input_wall_name(&out[i + 3], g, EA));
+	else if (out[i] == 'S' && out[i + 1] == ' ')
+		return (input_wall_name(&out[i + 2], g, S));
+	else if (out[i] == 'F' && out[i + 1] == ' ')
+		return (input_bg_color(&out[i + 2], g, FLOOR));
+	else if (out[i] == 'C' && out[i + 1] == ' ')
+		return (input_bg_color(&out[i + 2], g, CEILLING));
 	return (WRONG_MAP);
 }
 
-int		divide_map_start(char *out, t_game *g, int cnt)
+int		divide_map_start(char *out, t_game *g, int *cnt)
 {
-	if (cnt <= 8)
+	int i;
+
+	i = 0;
+	no_space(out, &i);
+	if (out[i] == '\0' && g->col == 0)
+	{
+		if (*cnt <= 8)
+			*cnt = *cnt - 1;
+		return (0);
+	}
+	if (*cnt <= 8)
 		return ((divdie_map_info(out, g)));
+	else
+		return ((init_map(out, g)));
 	return (4);
 }
 
@@ -60,7 +84,7 @@ int ft_read_map(t_game *g, char *map_name)
 		if (gnl_config == -1)
 			break;
 		cnt++;
-		divide_config = divide_map_start(out, g, cnt);
+		divide_config = divide_map_start(out, g, &cnt);
 		if (gnl_config == 0 || divide_config != 0)
 			break;
 		free(out);

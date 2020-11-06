@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 10:42:11 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/30 16:42:38 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 14:40:14 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,12 @@
 # define GNL_ERROR 4
 # define WRONG_MAP 5
 # define WRONG_RESOL_INPUT 6
-# define WRONG_NO_WALL_NAME_INPUT 7
+# define WRONG_IMAGE_NAME_INPUT 7
+# define WRONG_BG_COLOR_INPUT 8
+# define MAP_IS_NOT_AVAILABLE 9
 
 # define FLOOR 0
-# define CEILL 1
+# define CEILLING 1
 
 # define NO 0
 # define SO 1
@@ -92,8 +94,7 @@ typedef struct	s_game
 	void		*win;
 	t_img		img;
 	t_img		wall[5];
-	unsigned int floor;
-	unsigned int ceill;
+	unsigned int bgcolor[2];
 
 	double		dir_x;
 	double		dir_y;
@@ -124,12 +125,16 @@ typedef struct	s_game
 
 int				get_next_line(int fd, char **line);
 double			get_radian(int deg);
-void			ft_error(int err_code);
+void			ft_error(int err_code, t_game *g);
 int				ft_read_map(t_game *g, char *map_name);
 int				map_resol(char *out, t_game *g);
 void			no_space(char *out, int *i);
-int				skip_resol_word(char *out, int *i);
+int				skip_resol_word(char *out, int *i, int flag);
 int				check_remain(char *out, int i);
-int				map_wall(char *out, t_game *g, int flag);
+int				input_wall_name(char *out, t_game *g, int flag);
 void			word_dup(char *out, t_game *g, int *i, int flag);
+int				input_bg_color(char *out, t_game *g, int flag);
+void			find_rest(char *out, int *i);
+void			free_all(t_game *g);
+int				init_map(char *out, t_game *g);
 #endif
