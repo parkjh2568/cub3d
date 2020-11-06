@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 12:03:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 15:48:53 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 17:11:12 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ void	reset_struct(t_game *g)
 	g->x = 0;
 	g->y = 0;
 	g->flag = 0;
+	g->player_cnt = 0;
+	g->dir_x = -1;
+	g->dir_y = 0;
+	g->plan_x = 0;
+	g->plan_y = 0.66;
 }
 
 int main(int argc, char *argv[])
@@ -72,14 +77,14 @@ int main(int argc, char *argv[])
 	int		er;
 
 	reset_struct(&g);
-/*	if (argc == 3 || argc < 2 || argc > 3)
-		ft_error(INPUT_ERROR);
-	if (!(g.mlx = mlx_init()))
-		ft_error(MLX_ERROR);*/
-	if ((er = ft_read_map(&g, /*argv[1]*/"map.cub")))
+	if ((argc == 3 && ft_strncmp(argv[2], "--save", 9)) || argc < 2 || argc > 3)
+		ft_error(INPUT_ERROR, &g);
+	if ((er = ft_read_map(&g, argv[1])))
 		ft_error(er, &g);
 	if ((er = map_init_and_available_test(&g)))
 		ft_error(er, &g);
+/*	if (!(g.mlx = mlx_init()))
+		ft_error(MLX_ERROR);*/
 	free_all(&g);
 	return(0);
 }

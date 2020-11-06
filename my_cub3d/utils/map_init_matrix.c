@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 14:56:58 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 15:54:50 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 17:11:13 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int		reset_map(t_game *g)
 	while (i < g->col)
 	{
 		j = 0;
-		if (!(g->map[i] = (char *)malloc(sizeof(char) * (g->row + 2))))
+		if (!(g->map[i] = (char *)malloc(sizeof(char) * (g->row + 1))))
 			return (MAP_IS_NOT_AVAILABLE);
-		g->map[i][g->row + 1] = '\0';
-		while (j < g->row + 1)
+		g->map[i][g->row] = '\0';
+		while (j < g->row)
 		{
 			g->map[i][j] = ' ';
 			j++;
@@ -82,6 +82,7 @@ void	input_map_data(t_game *g)
 			break ;
 		ft_strlcpy(g->map[i], g->map_all, j + 1);
 		g->map[i][j] = ' ';
+		g->map[i][g->row] = '\0';
 		cut_map_all(g, j);
 		i++;
 	}
@@ -92,7 +93,9 @@ int		map_init_and_available_test(t_game *g)
 	if (reset_map(g))
 		return (MAP_IS_NOT_AVAILABLE);
 	input_map_data(g);
-	if (map_available_test(g))
+	if (map_available_test(g) == 1)
 		return (MAP_IS_NOT_AVAILABLE);
+	else if (map_available_test(g) == 2)
+		return (SO_MANY_PLAYER_IN_MAP);
 	return (0);
 }

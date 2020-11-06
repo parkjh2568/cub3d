@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 10:42:11 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 15:49:20 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 17:19:40 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
+
 # define X_PLAN 0
 # define Y_PLAN 1
 
@@ -42,6 +43,7 @@
 # define WRONG_IMAGE_NAME_INPUT 7
 # define WRONG_BG_COLOR_INPUT 8
 # define MAP_IS_NOT_AVAILABLE 9
+# define SO_MANY_PLAYER_IN_MAP 10
 
 # define FLOOR 0
 # define CEILLING 1
@@ -107,6 +109,8 @@ typedef struct	s_game
 	int			height;
 	int			row;
 	int			col;
+
+	int			player_cnt;
 	int			x;
 	int			y;
 	int			flag;
@@ -116,11 +120,8 @@ typedef struct	s_game
 	double		old_plan_x;
 	double		old_plan_y;
 
-	int			max_long;
 	char		*map_all;
 	char		**map;
-
-	unsigned int	color[2];
 }				t_game;
 
 int				get_next_line(int fd, char **line);
@@ -139,4 +140,5 @@ void			free_all(t_game *g);
 int				init_map(char *out, t_game *g);
 int				map_available_test(t_game *g);
 int				map_init_and_available_test(t_game *g);
+void			rotate_vector(t_game *g, int deg);
 #endif

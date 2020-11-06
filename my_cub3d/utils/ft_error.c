@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 11:07:21 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 15:29:25 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 17:11:13 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,16 @@ void	ft_error1(int err_code)
 		write(1, "Error: Wrong BG Color Input\n", 28);
 	else if (err_code == MAP_IS_NOT_AVAILABLE)
 		write(1, "Error: Map Is Not Available\n", 28);
+	else if (err_code == SO_MANY_PLAYER_IN_MAP)
+		write(1, "Error: So Many Player In Map\n", 29);
 }
 
 void	ft_error(int err_code, t_game *g)
 {
-	if (err_code < 10)
+	write(1, "\x1b[31m", 6);
+	if (err_code <= 10)
 		ft_error1(err_code);
+	write(1, "\x1b[0m", 5);
 	perror("");
 	free_all(g);
 	exit(1);
