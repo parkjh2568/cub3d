@@ -69,7 +69,7 @@ int	input_key(int key, t_cub *game)
 	double old_plan_y;
 	double rot;
 
-	rot = get_radian(game->deg);
+	rot = get_radian(90);
 	old_dir_x = game->dir_x;
 	old_dir_y = game->dir_y;
 	old_plan_x = game->plan_x;
@@ -109,6 +109,8 @@ int	input_key(int key, t_cub *game)
 		game->dir_y = old_dir_x * sin(rot) + old_dir_y * cos(rot);
 		game->plan_x = old_plan_x * cos(rot) - old_plan_y * sin(rot);
 		game->plan_y = old_plan_x * sin(rot) + old_plan_y * cos(rot);
+		printf("\ndir_x = %lf, dir_y = %lf\n",game->dir_x, game->dir_y);
+		printf("\nplan_x = %lf, plan_y = %lf\n", game->plan_x, game->plan_y);
 
 	}
 	else if (key == KEY_E)

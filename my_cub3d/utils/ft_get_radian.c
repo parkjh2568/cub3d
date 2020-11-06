@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 18:40:42 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 17:17:23 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 17:36:32 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ double	get_radian(int deg)
 {
 	double cal;
 
-	cal = deg * (3.14159265358979323846264338327950288419 / 180);
-	return (deg);
+	cal = deg * (PI / 180);
+	return (cal);
 }

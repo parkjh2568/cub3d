@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 15:28:55 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 17:20:48 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 17:39:25 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	find_location_of_player(t_game *g, int i, int j)
 		rotate_vector(g, 90);
 	else if (g->map[i][j] == 'E')
 		rotate_vector(g, -90);
+	else if (g->map[i][j] == 'N')
+		rotate_vector(g, 0);
 	g->map[i][j] = '0';
 }
 

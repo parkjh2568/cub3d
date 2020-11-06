@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 10:42:11 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 17:19:40 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 17:36:45 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <string.h>
 # include "./mlx/mlx.h"
 # include "./libft/libft.h"
+
+# define PI 3.14159265358979323846264338327950288419L
 
 # define KEY_ESC 53
 # define KEY_Q 12
