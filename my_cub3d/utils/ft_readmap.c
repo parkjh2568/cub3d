@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 11:18:03 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/30 15:41:24 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/10/30 16:42:22 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int		divdie_map_info(char *out, t_game *g)
 		i++;
 	if (out[i] == 'R' && out[i + 1] == ' ')
 		return (map_resol(&out[i + 2], g));
+	else if (out[i] == 'N' && out[i + 1] == 'O' && out[i + 2] == ' ')
+		return (map_wall(&out[i + 3], g, NO));
 	return (WRONG_MAP);
 }
 

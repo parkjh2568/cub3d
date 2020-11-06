@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 10:42:11 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/30 15:51:18 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/10/30 16:42:38 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define GNL_ERROR 4
 # define WRONG_MAP 5
 # define WRONG_RESOL_INPUT 6
+# define WRONG_NO_WALL_NAME_INPUT 7
 
 # define FLOOR 0
 # define CEILL 1
@@ -57,6 +58,7 @@ typedef struct	s_img
 {
 	void		*img;
 	int			*data;
+	char		*name;
 	int			size_l;
 	int			bpp;
 	int			endian;
@@ -128,4 +130,6 @@ int				map_resol(char *out, t_game *g);
 void			no_space(char *out, int *i);
 int				skip_resol_word(char *out, int *i);
 int				check_remain(char *out, int i);
+int				map_wall(char *out, t_game *g, int flag);
+void			word_dup(char *out, t_game *g, int *i, int flag);
 #endif

@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 12:04:53 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/30 15:51:17 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/10/30 16:40:48 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,18 @@ int map_resol(char *out, t_game *g)
 		return (WRONG_RESOL_INPUT);
 	if (check_remain(out, i) != 0)
 		return (WRONG_RESOL_INPUT);
+	return (0);
+}
+
+int map_wall(char *out, t_game *g, int flag)
+{
+	int i;
+
+	i = 0;
+	no_space(out, &i);
+	word_dup(out, g, &i, flag);
+	no_space(out, &i);
+	if (check_remain(out, i) != 0)
+		return (WRONG_NO_WALL_NAME_INPUT);
 	return (0);
 }

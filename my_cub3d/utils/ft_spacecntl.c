@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 12:23:50 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/30 15:50:36 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/10/30 16:43:48 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,24 @@ int		skip_resol_word(char *out, int *i)
 	return (0);
 }
 
-int		skip_word(char *out, int *i)
+void	word_dup(char *out, t_game *g, int *i, int flag)
 {
+	int j;
+	int k;
+	int start;
+
+	start = *i;
+	k = 0;
+	j = 0;
 	while(out[*i] != ' ')
 	{
 		if (out[*i] == '\0')
-			return (0);
-		else
-			return (-1);
+				break;
 		*i = *i + 1;
+		j++;
 	}
-	return (0);
+	g->wall[flag].name = malloc(sizeof(char) * (j + 1));
+	ft_strlcpy(g->wall[flag].name, &out[start], j);
 }
 
 int		check_remain(char *out, int i)

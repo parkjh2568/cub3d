@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 12:03:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/30 15:39:20 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/10/30 16:44:19 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int main(int argc, char *argv[])
 	if ((er = ft_read_map(&g, /*argv[1]*/"map.cub")))
 	//	ft_error(er);
 		printf("er = %d",er);
-	printf("\n width = %d, height= = %d",g.width, g.height);
+	printf("\nwidth = %d, height= = %d",g.width, g.height);
+	printf("\nNO_wall_name = %ss",g.wall[NO].name);
+	free(g.wall[NO].name);
 	return(0);
 }
