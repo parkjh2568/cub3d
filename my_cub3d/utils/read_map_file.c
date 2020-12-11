@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 11:18:03 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/11 13:55:43 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/11 14:02:23 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		check_error(int gnl_config, int divide_config)
 	return (0);
 }
 
-char	*config_map_name(char *map_name)
+int		config_map_name(char *map_name, int *fd)
 {
 	char	*out;
 	int		i;
@@ -80,16 +80,19 @@ char	*config_map_name(char *map_name)
 	{
 		if (map_name[i + 1] == 'c' && map_name[i + 2] == 'u' &&
 				map_name[i + 3] == 'b')
-			return (ft_strdup(map_name));
+			out = ft_strdup(map_name);
 	}
-	out = malloc(sizeof(char) * (len + 5));
-	ft_strlcpy(out, map_name, len + 1);
-	out[len] = '.';
-	out[len + 1] = 'c';
-	out[len + 2] = 'u';
-	out[len + 3] = 'b';
-	out[len + 4] = '\0';
-	return (out);
+	else
+	{
+		out = malloc(sizeof(char) * (len + 5));
+		ft_strlcpy(out, map_name, len + 1);
+		out[len] = '.';
+		out[len + 1] = 'c';
+		out[len + 2] = 'u';
+		out[len + 3] = 'b';
+		out[len + 4] = '\0';
+	}
+	*fd = open(out, O_RDONLY);
 }
 int		ft_read_map(t_game *g, char *map_name)
 {
@@ -98,10 +101,9 @@ int		ft_read_map(t_game *g, char *map_name)
 	int		gnl_config;
 	int		divide_config;
 	int		cnt;
-	char	*open_map_name;
 
 	cnt = 0;
-	fd = open(map_name, O_RDONLY);
+	config_map_name(map_name, &fd);
 	if (fd < 0)
 		return (MAP_FILE_OPEN_ERROR);
 	while (1)
@@ -117,6 +119,5 @@ int		ft_read_map(t_game *g, char *map_name)
 	}
 	free(out);
 	close(fd);
-	free(open_map_name);
 	return (check_error(gnl_config, divide_config));
 }
