@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 11:03:51 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 13:36:09 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 17:41:28 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (NULL);
 	ft_strlcpy(out, s1, len1 + 1);
 	free(s1);
-	ft_strlcpy(out + len1, s2, len2 + 1);	
+	ft_strlcpy(out + len1, s2, len2 + 1);
 	return (out);
 }

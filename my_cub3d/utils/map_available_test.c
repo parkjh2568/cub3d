@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 15:28:55 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 17:39:25 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 17:40:57 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int		check_available2(char **map, int i, int j)
 {
 	if (map[i - 1][j] != ' ' && map[i - 1][j] != '1')
-		return(1);
+		return (1);
 	else if (map[i][j - 1] != ' ' && map[i][j - 1] != '1')
-		return(1);
+		return (1);
 	else if (map[i + 1][j] != ' ' && map[i + 1][j] != '1')
-		return(1);
+		return (1);
 	else if (map[i][j + 1] != ' ' && map[i][j + 1] != '1')
-		return(1);
+		return (1);
 	return (0);
 }
 
@@ -76,10 +76,10 @@ int		map_available_test(t_game *g)
 	int j;
 
 	i = 0;
-	while(i < g->col)
+	while (i < g->col)
 	{
 		j = 0;
-		while(j < g->row)
+		while (j < g->row)
 		{
 			if (g->player_cnt > 1)
 				return (2);

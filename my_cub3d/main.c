@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 12:03:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 17:39:28 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/11/06 17:46:23 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_all(t_game *g)
 {
 	int i;
 
-/*	printf("\nwidth = %d, height= = %d",g->width, g->height);
+	printf("\nwidth = %d, height= = %d",g->width, g->height);
 	printf("\nNO_wall_name = %s",g->wall[NO].name);
 	printf("\nSO_wall_name = %s",g->wall[SO].name);
 	printf("\nWE_wall_name = %s",g->wall[WE].name);
@@ -24,10 +24,10 @@ void	free_all(t_game *g)
 	printf("\nSprite_name = %s",g->wall[S].name);
 	printf("\nCeilling_color = %i",g->bgcolor[CEILLING]);
 	printf("\nFloosr_color = %i",g->bgcolor[FLOOR]);
-	printf("\ncol = %d, row = %d\n",g->col,g->row);*/
+	printf("\ncol = %d, row = %d\n",g->col,g->row);
 	printf("\n dir_x = %lf, dir_y = %lf\n",g->dir_x, g->dir_y);
 	printf("\n plan_x = %lf, plan_y = %lf\n",g->plan_x, g->plan_y);
-/*	printf("\n map_all = \n%s\n",g->map_all);
+	printf("\n map_all = \n%s\n",g->map_all);
 	printf("\n map_sep = \n");
 	i = 0;
 
@@ -35,7 +35,7 @@ void	free_all(t_game *g)
 	{
 		printf("%s\n",g->map[i]);
 		i++;
-	}*/
+	}
 
 	i = NO;
 	while(i <= S)
