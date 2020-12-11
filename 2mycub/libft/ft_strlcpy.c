@@ -1,37 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memccpy.c                                       :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/29 15:39:43 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/31 21:16:05 by junhypar         ###   ########.fr       */
+/*   Created: 2020/05/30 11:02:12 by junhypar          #+#    #+#             */
+/*   Updated: 2020/10/30 13:42:31 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
+size_t		ft_strlcpy(char *dest, char *src, size_t size)
 {
-	unsigned char	*d;
-	unsigned char	*s;
-	unsigned int	i;
-	unsigned char	cc;
+	size_t a;
+	size_t b;
 
-	i = 0;
-	d = (unsigned char *)dest;
-	s = (unsigned char *)src;
-	cc = (unsigned char)c;
-	while (i < n)
+	if (!dest || !src)
+		return (0);
+	a = 0;
+	b = 0;
+	if (size != 0)
 	{
-		d[i] = s[i];
-		if (s[i] == cc)
+		while (src[a] && a < size - 1)
 		{
-			i++;
-			return (&dest[i]);
+			dest[a] = src[a];
+			a++;
 		}
-		i++;
+		dest[a] = '\0';
 	}
-	return (0);
+	while (src[b])
+	{
+		b++;
+	}
+	return (b);
 }

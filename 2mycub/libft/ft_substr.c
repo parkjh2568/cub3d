@@ -1,37 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memccpy.c                                       :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/29 15:39:43 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/31 21:16:05 by junhypar         ###   ########.fr       */
+/*   Created: 2020/07/01 10:22:59 by junhypar          #+#    #+#             */
+/*   Updated: 2020/07/14 16:02:23 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	unsigned char	*d;
-	unsigned char	*s;
-	unsigned int	i;
-	unsigned char	cc;
+	unsigned		slen;
+	char			*out;
+	size_t			i;
 
+	if (!s)
+		return (NULL);
 	i = 0;
-	d = (unsigned char *)dest;
-	s = (unsigned char *)src;
-	cc = (unsigned char)c;
-	while (i < n)
+	slen = ft_strlen((char *)s);
+	if (slen < start || len <= 0 || slen == 0)
+		return (ft_strdup(""));
+	if (slen >= start + len)
 	{
-		d[i] = s[i];
-		if (s[i] == cc)
+		if (!(out = malloc(sizeof(char) * (len + 1))))
+			return (NULL);
+		while (i < len)
 		{
+			out[i] = s[i + start];
 			i++;
-			return (&dest[i]);
 		}
-		i++;
+		out[i] = 0;
+		return (out);
 	}
-	return (0);
+	else
+		return (ft_strdup(""));
 }

@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memccpy.c                                       :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/29 15:39:43 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/31 21:16:05 by junhypar         ###   ########.fr       */
+/*   Created: 2020/06/29 17:24:56 by junhypar          #+#    #+#             */
+/*   Updated: 2020/07/02 14:38:00 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
+int			len(const char *s)
 {
-	unsigned char	*d;
-	unsigned char	*s;
-	unsigned int	i;
-	unsigned char	cc;
+	int	i;
 
 	i = 0;
-	d = (unsigned char *)dest;
-	s = (unsigned char *)src;
-	cc = (unsigned char)c;
-	while (i < n)
-	{
-		d[i] = s[i];
-		if (s[i] == cc)
-		{
-			i++;
-			return (&dest[i]);
-		}
+	while (s[i])
 		i++;
+	return (i);
+}
+
+char		*ft_strrchr(const char *s, int c)
+{
+	const char	*d;
+	int			i;
+
+	i = len(s) + 1;
+	d = s + i - 1;
+	while (i--)
+	{
+		if (*d == c)
+			return ((char *)d);
+		d--;
 	}
 	return (0);
 }

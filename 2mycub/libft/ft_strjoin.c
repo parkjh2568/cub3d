@@ -1,37 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memccpy.c                                       :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/29 15:39:43 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/31 21:16:05 by junhypar         ###   ########.fr       */
+/*   Created: 2020/07/01 11:03:51 by junhypar          #+#    #+#             */
+/*   Updated: 2020/10/30 13:46:06 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	unsigned char	*d;
-	unsigned char	*s;
-	unsigned int	i;
-	unsigned char	cc;
+	char	*out;
+	int		len1;
+	int		len2;
+	int		i;
 
+	if (!s1 && !s2)
+		return (NULL);
+	else if (!s1 || !s2)
+		return (!s1 ? ft_strdup(s2) : ft_strdup(s1));
 	i = 0;
-	d = (unsigned char *)dest;
-	s = (unsigned char *)src;
-	cc = (unsigned char)c;
-	while (i < n)
-	{
-		d[i] = s[i];
-		if (s[i] == cc)
-		{
-			i++;
-			return (&dest[i]);
-		}
-		i++;
-	}
-	return (0);
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	if (!(out = malloc(sizeof(char) * (len1 + len2 + 1))))
+		return (NULL);
+	ft_strlcpy(out, s1, len1 + 1);
+	free(s1);
+	ft_strlcpy(out + len1, s2, len2 + 1);	
+	return (out);
 }

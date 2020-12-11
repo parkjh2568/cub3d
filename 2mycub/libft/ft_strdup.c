@@ -1,37 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memccpy.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/29 15:39:43 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/31 21:16:05 by junhypar         ###   ########.fr       */
+/*   Created: 2020/06/04 14:51:06 by junhypar          #+#    #+#             */
+/*   Updated: 2020/07/01 10:35:43 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
 
-void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
+char		*ft_strdup(char *src)
 {
-	unsigned char	*d;
-	unsigned char	*s;
-	unsigned int	i;
-	unsigned char	cc;
+	char	*a;
+	int		b;
 
-	i = 0;
-	d = (unsigned char *)dest;
-	s = (unsigned char *)src;
-	cc = (unsigned char)c;
-	while (i < n)
+	b = 0;
+	while (src[b])
+		b++;
+	a = (char *)malloc(sizeof(char) * (b + 1));
+	if (!a)
+		return (NULL);
+	b = 0;
+	while (src[b])
 	{
-		d[i] = s[i];
-		if (s[i] == cc)
-		{
-			i++;
-			return (&dest[i]);
-		}
-		i++;
+		a[b] = src[b];
+		b++;
 	}
-	return (0);
+	a[b] = 0;
+	return (a);
 }

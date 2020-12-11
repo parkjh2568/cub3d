@@ -1,37 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memccpy.c                                       :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/29 15:39:43 by junhypar          #+#    #+#             */
-/*   Updated: 2020/10/31 21:16:05 by junhypar         ###   ########.fr       */
+/*   Created: 2020/06/01 09:47:25 by junhypar          #+#    #+#             */
+/*   Updated: 2020/07/06 15:45:35 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
+int			ft_strncmp(char *s1, char *s2, size_t n)
 {
-	unsigned char	*d;
-	unsigned char	*s;
-	unsigned int	i;
-	unsigned char	cc;
+	size_t			a;
+	unsigned char	*ss1;
+	unsigned char	*ss2;
 
-	i = 0;
-	d = (unsigned char *)dest;
-	s = (unsigned char *)src;
-	cc = (unsigned char)c;
-	while (i < n)
+	ss1 = (unsigned char *)s1;
+	ss2 = (unsigned char *)s2;
+	a = 0;
+	if (n != 0)
 	{
-		d[i] = s[i];
-		if (s[i] == cc)
+		while (ss1[a] && a < n)
 		{
-			i++;
-			return (&dest[i]);
+			if (ss1[a] > ss2[a])
+				return (ss1[a] - ss2[a]);
+			else if (ss2[a] > ss1[a])
+				return (ss1[a] - ss2[a]);
+			a++;
 		}
-		i++;
+		if (ss1[a] == 0 && ss2[a] != 0 && a < n)
+			return (ss1[a] - ss2[a]);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 12:04:53 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 15:50:28 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/02 08:06:25 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		input_bg_color2(char *out, t_game *g, int flag, int i)
 	unsigned int	j;
 	int				config;
 
-	if ((j = ft_atoi(&out[i])) > 255)
+	if ((j = ft_atoi(&out[i])) > 255 || ft_atoi(&out[i]) < 0)
 		return (WRONG_BG_COLOR_INPUT);
 	g->bgcolor[flag] += j;
 	config = skip_resol_word(out, &i, 1);
@@ -74,14 +74,14 @@ int		input_bg_color(char *out, t_game *g, int flag)
 	i = 0;
 	g->bgcolor[flag] = 0;
 	no_space(out, &i);
-	if ((j = ft_atoi(&out[i])) > 255)
+	if ((j = ft_atoi(&out[i])) > 255 || ft_atoi(&out[i]) < 0)
 		return (WRONG_BG_COLOR_INPUT);
 	g->bgcolor[flag] += (j * 16 * 16 * 16 * 16);
 	config = skip_resol_word(out, &i, 1);
 	if (config != 0)
 		return (WRONG_BG_COLOR_INPUT);
 	find_rest(out, &i);
-	if ((j = ft_atoi(&out[i])) > 255)
+	if ((j = ft_atoi(&out[i])) > 255 || ft_atoi(&out[i] < 0)
 		return (WRONG_BG_COLOR_INPUT);
 	g->bgcolor[flag] += (j * 16 * 16);
 	config = skip_resol_word(out, &i, 1);
