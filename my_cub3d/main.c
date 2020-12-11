@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 12:03:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 17:46:23 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/11 14:10:35 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	reset_struct(t_game *g)
 	g->plan_y = 0.66;
 }
 
-int main(int argc, char *argv[])
+int		main(int argc, char *argv[])
 {
 	t_game	g;
 	int		er;

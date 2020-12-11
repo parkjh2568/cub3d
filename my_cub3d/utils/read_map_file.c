@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 11:18:03 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/11 14:02:23 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/11 14:11:43 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		check_error(int gnl_config, int divide_config)
 	return (0);
 }
 
-int		config_map_name(char *map_name, int *fd)
+void	config_map_name(char *map_name, int *fd)
 {
 	char	*out;
 	int		i;
@@ -74,9 +74,9 @@ int		config_map_name(char *map_name, int *fd)
 
 	i = 0;
 	len = ft_strlen(map_name);
-	while(map_name[i] != '.' && map_name[i])
+	while (map_name[i] != '.' && map_name[i])
 		i++;
-	if (map_name[i] == '.' && len == i + 3)
+	if (map_name[i] == '.' && len == i + 4)
 	{
 		if (map_name[i + 1] == 'c' && map_name[i + 2] == 'u' &&
 				map_name[i + 3] == 'b')
@@ -94,6 +94,7 @@ int		config_map_name(char *map_name, int *fd)
 	}
 	*fd = open(out, O_RDONLY);
 }
+
 int		ft_read_map(t_game *g, char *map_name)
 {
 	int		fd;
