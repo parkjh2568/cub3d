@@ -1,0 +1,28 @@
+R 600 400
+NO ./path_to_the_north_texture_end
+SO ./path_to_the_south_texture_end
+WE ./path_to_the_west_texture_end
+
+
+EA ./path_to_the_east_texture_end
+
+
+S ./path_to_the_sprite_texture_end
+
+
+F 220,100,0
+C 225,30,0
+
+1111111111111111
+1222222222222221
+1400000000000001
+1400000000000001
+1400000000000001
+1400000N00000001
+1400000000000001
+1400000000000001
+1333333333333331
+1111111111111111
+
+
+
