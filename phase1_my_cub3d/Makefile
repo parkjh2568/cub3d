@@ -6,7 +6,7 @@
 #    By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/28 10:41:18 by junhypar          #+#    #+#              #
-#    Updated: 2020/12/26 15:27:22 by junhypar         ###   ########.fr        #
+#    Updated: 2020/12/26 18:35:24 by junhypar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,13 @@ ${NAME}:	${OBJS}
 			cp libft/libft.a ${LIBNAME}
 			ar rc ${LIBNAME} ${OBJS}
 			${CC} ${CFLAG} ${CFLAG2} -o ${NAME} -L. -l${NAME}
+
+seg:		${OBJS}
+			$(MAKE) bonus -C ./libft
+			cp libft/libft.a ${LIBNAME}
+			ar rc ${LIBNAME} ${OBJS}
+			${CC} -g3 -fsanitize=address ${CFLAG} ${CFLAG2} -o ${NAME} -L. -l${NAME}
+
 
 clean:
 		$(MAKE) clean -C ./libft
