@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 15:28:55 by junhypar          #+#    #+#             */
-/*   Updated: 2020/11/06 17:40:57 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/28 13:52:01 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int		check_available2(char **map, int i, int j)
 	else if (map[i + 1][j] != ' ' && map[i + 1][j] != '1')
 		return (1);
 	else if (map[i][j + 1] != ' ' && map[i][j + 1] != '1')
+		return (1);
+	if (map[i][j] - '0' > WALL_NUM - 3)
 		return (1);
 	return (0);
 }
@@ -62,9 +64,9 @@ void	find_location_of_player(t_game *g, int i, int j)
 	if (g->map[i][j] == 'S')
 		rotate_vector(g, 180);
 	else if (g->map[i][j] == 'W')
-		rotate_vector(g, 90);
-	else if (g->map[i][j] == 'E')
 		rotate_vector(g, -90);
+	else if (g->map[i][j] == 'E')
+		rotate_vector(g, 90);
 	else if (g->map[i][j] == 'N')
 		rotate_vector(g, 0);
 	g->map[i][j] = '0';

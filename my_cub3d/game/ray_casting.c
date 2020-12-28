@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/25 20:39:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/26 16:23:01 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/28 14:59:40 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,53 +51,42 @@ void	set_ray(t_game *g, t_raycast *ray, int i)
 
 
 //임시 색입히기//
-void	draw_wall(t_game *g, t_raycast *ray, int i)
+void	draw_start(t_game *g, t_raycast *ray, int i)
 {
-	int drawS = (ray->wall_height / 2 * -1) + (g->height / 2);
-	if (drawS < 0)
-		drawS = 0;
-	int drawE = (ray->wall_height / 2) + (g->height / 2);
-	if (drawE >= g->height)
-		drawE = g->height - 1;
-	int color;
-	if (g->map[ray->y][ray->x] == '1')
-		color = 0xFF0000;
-	else if (g->map[ray->y][ray->x] == '2')
-		color = 0x00ff00;
-	else if (g->map[ray->y][ray->x] == '3')
-		color = 0x0000ff;
-	else
-		color = 0x123456;
+	t_painter	p;
 
-	if (ray->side == 1)
-		color = color / 2;
-		//draw_line(g, i, drawS, drawE, color);
-	
-	while(drawS <= drawE)
-	{
-		mlx_pixel_put(g->mlx, g->win, i, drawS, color);
-		drawS++;
-	}
+	set_painter(g, ray, &p);
+	draw_wall(g, ray, &p, i);
 }
 
 void	spread_ray(t_raycast *ray)
 {
-	if (ray->side_dist_y < ray->side_dist_x)
+	if (ray->side_dist_x < ray->side_dist_y)
 	{
-		ray->side_dist_y += ray->delta_y;
-		ray->y += ray->step_y;
+		ray->side_dist_x += ray->delta_x;
+		ray->x += ray->step_x;
 		ray->side = 0;
 	}
 	else
 	{
-		ray->side_dist_x += ray->delta_x;
-		ray->x += ray->step_x;
+		ray->side_dist_y += ray->delta_y;
+		ray->y += ray->step_y;
 		ray->side = 1;
 	}
 }
 
 void	ray_casting(t_game *g)
 {
+//임시 배경칠
+	for(int x = 0; x < g->width; x++)
+	{
+		for(int y = 0; y < g->height; y++)
+		{
+			g->buf[y][x] = g->bgcolor[0];
+			g->buf[g->height - y - 1][x] = g->bgcolor[1];
+		}
+	}
+
 	t_raycast ray;
 	int i;
 
@@ -112,11 +101,11 @@ void	ray_casting(t_game *g)
 				ray.hit = 1;
 		}
 		if (ray.side == 0)
-			ray.how_long = (ray.y - g->y + (1 - ray.step_y) / 2) / ray.dir_y;
-		else
 			ray.how_long = (ray.x - g->x + (1 - ray.step_x) / 2) / ray.dir_x;
+		else
+			ray.how_long = (ray.y - g->y + (1 - ray.step_y) / 2) / ray.dir_y;
 		ray.wall_height = (int)(g->height / ray.how_long);
-		draw_wall(g, &ray, i);
+		draw_start(g, &ray, i);
 		i++;
 	}
 }

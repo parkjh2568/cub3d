@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 10:42:11 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/26 16:03:41 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/28 14:57:57 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
+# define KEY_LEFT_ARROW 123
+# define KEY_RIGHT_ARROW 124
 
 # define X_PLAN 0
 # define Y_PLAN 1
@@ -54,6 +56,7 @@
 # define FLOOR 0
 # define CEILLING 1
 
+# define WALL_NUM 5
 # define NO 0
 # define SO 1
 # define WE 2
@@ -111,18 +114,48 @@ typedef struct	s_raycast
 	int			plan;
 }				t_raycast;
 
+typedef struct	s_painter
+{
+	int			d_start;
+	int			d_end;
+	int			tex_num;
+	double		wall_x;
+	int			tex_x;
+	int			tex_y;
+	double		tex_pos;
+	double		step;
+	int			tex_width;
+	int			tex_height;
+	int			flag;
+
+}				t_painter;
+
+typedef	struct	s_item
+{
+	int			tex_num;
+	double		pos_x;
+	double		pos_y;
+	int			ray_x;
+	int			ray_y;
+}				t_item;
+
 typedef struct	s_game
 {
 	void		*mlx;
 	void		*win;
 	t_img		img;
-	t_img		wall[5];
+	t_img		wall[WALL_NUM];
+
+	int			**buf;
+	int			**texture;
+
+	int			item_count;
+	t_item		item[100];
+
 	unsigned int bgcolor[2];
 
 	double		dir_x;
 	double		dir_y;
-	double		ray_dir_x;
-	double		ray_dir_y;
 	double		plan_x;
 	double		plan_y;
 
@@ -163,5 +196,9 @@ void			rotate_vector(t_game *g, int deg);
 void			ft_start_game(t_game *g);
 void			ft_key_press_up_down(t_game *g, int flag);
 void			ft_key_press_rot_left_right(t_game *g, int flag);
+void			ft_key_press_left_right(t_game *g, int flag);
 void			ray_casting(t_game *g);
+void			put_in_texture(t_game *g);
+void			set_painter(t_game *g, t_raycast *ray, t_painter *p);
+void			draw_wall(t_game *g, t_raycast *ray, t_painter *p, int j);
 #endif
