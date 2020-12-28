@@ -6,12 +6,30 @@
 /*   By: junhypar <junhypar@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 14:22:33 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/28 14:44:48 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/28 15:38:55 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
+void	draw_bg(t_game *g)
+{
+	int x;
+	int y;
+
+	x = 0;
+	while (x < g->width)
+	{
+		y = 0;
+		while (y < g->height)
+		{
+			g->buf[y][x] = g->bgcolor[0];
+			g->buf[g->height - y - 1][x] = g->bgcolor[1];
+		   y++;	
+		}
+		x++;
+	}
+}
 void	draw_wall(t_game *g, t_raycast *ray, t_painter *p, int j)
 {
 	int i;
@@ -50,19 +68,10 @@ void	set_painter(t_game *g, t_raycast *ray, t_painter *p)
 	if (p->d_end >= g->height)
 		p->d_end = g->height - 1;
 	p->tex_num = g->map[ray->y][ray->x] - 1 - '0';
-	if (p->tex_num == 0)
-	{
-		if(ray->side == 0 && ray->dir_x > 0)
-			p->tex_num += 3;
-		else if (ray->side == 0 && ray->dir_x <= 0)
-			p->tex_num += 2;
-		else if (ray->side == 1 && ray->dir_y >= 0)
-			p->tex_num += 1;
-		p->flag = 1;
-	}
-	else
-	{
+	if(ray->side == 0 && ray->dir_x > 0)
 		p->tex_num += 3;
-		p->flag = 0;
-	}
+	else if (ray->side == 0 && ray->dir_x <= 0)
+		p->tex_num += 2;
+	else if (ray->side == 1 && ray->dir_y >= 0)
+		p->tex_num += 1;
 }

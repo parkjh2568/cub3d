@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 10:42:11 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/28 14:57:57 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/28 17:24:03 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,17 +126,13 @@ typedef struct	s_painter
 	double		step;
 	int			tex_width;
 	int			tex_height;
-	int			flag;
-
 }				t_painter;
 
 typedef	struct	s_item
 {
+	double		x;
+	double		y;
 	int			tex_num;
-	double		pos_x;
-	double		pos_y;
-	int			ray_x;
-	int			ray_y;
 }				t_item;
 
 typedef struct	s_game
@@ -149,8 +145,8 @@ typedef struct	s_game
 	int			**buf;
 	int			**texture;
 
-	int			item_count;
 	t_item		item[100];
+	int			item_cnt;
 
 	unsigned int bgcolor[2];
 
@@ -199,6 +195,7 @@ void			ft_key_press_rot_left_right(t_game *g, int flag);
 void			ft_key_press_left_right(t_game *g, int flag);
 void			ray_casting(t_game *g);
 void			put_in_texture(t_game *g);
+void			draw_bg(t_game *g);
 void			set_painter(t_game *g, t_raycast *ray, t_painter *p);
 void			draw_wall(t_game *g, t_raycast *ray, t_painter *p, int j);
 #endif

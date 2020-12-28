@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 12:03:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/28 13:35:33 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/28 17:25:16 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	reset_struct(t_game *g)
 	}
 	g->buf = 0;
 	g->texture = 0;
-
+	g->item_cnt = 0;
 
 	g->row = 0;
 	g->col = 0;

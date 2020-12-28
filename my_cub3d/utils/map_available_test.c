@@ -6,13 +6,13 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 15:28:55 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/28 13:52:01 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/28 17:48:16 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int		check_available2(char **map, int i, int j)
+int		check_available2(t_game *g, char **map, int i, int j)
 {
 	if (map[i - 1][j] != ' ' && map[i - 1][j] != '1')
 		return (1);
@@ -24,6 +24,13 @@ int		check_available2(char **map, int i, int j)
 		return (1);
 	if (map[i][j] - '0' > WALL_NUM - 3)
 		return (1);
+	else if (map[i][j] > '1' && map[i][j] <= '9')
+	{
+		g->item[g->item_cnt].x = j + 0.5;
+		g->item[g->item_cnt].y = i + 0.5;
+		g->item[g->item_cnt].tex_num = map[i][j] - '0' + 2;
+		map[i][j] = '0';
+	}
 	return (0);
 }
 
@@ -51,7 +58,7 @@ int		check_available(t_game *g, char **map, int i, int j)
 	}
 	else if (map[i][j] == ' ')
 	{
-		return (check_available2(map, i, j));
+		return (check_available2(g, map, i, j));
 	}
 	return (0);
 }
