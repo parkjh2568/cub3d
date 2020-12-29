@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 12:03:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/28 17:25:16 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/29 18:18:46 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,15 @@ void	free_all(t_game *g)
 				g->wall[i].name, g->wall[i].height, g->wall[i].width);
 		i++;
 	}
+	i = 0;
+
+	while (i < g->item_cnt)
+	{
+		printf("item_x = %f, item_y = %f, item_tex = %d\n",
+				g->item[i].x,g->item[i].y,g->item[i].tex_num);
+		i++;
+	}
+
 	i = 0;
 
 	while(i < g->col)
@@ -86,6 +95,8 @@ void	free_all(t_game *g)
 		}
 		free(g->buf);
 	}
+	if (g->z_buf)
+		free(g->z_buf);
 }
 
 void	reset_struct(t_game *g)
@@ -103,7 +114,14 @@ void	reset_struct(t_game *g)
 	g->buf = 0;
 	g->texture = 0;
 	g->item_cnt = 0;
+	g->z_buf = 0;
 
+	i = 0;
+	while (i < 150)
+	{
+		g->key_trig[i] = 0;
+		i++;
+	}
 	g->row = 0;
 	g->col = 0;
 	g->x = 0;
@@ -130,6 +148,7 @@ int		main(int argc, char *argv[])
 		ft_error(er, &g);
 	if ((er = map_init_and_available_test(&g)))
 		ft_error(er, &g);
+	g.z_buf = malloc(sizeof(double) * (g.width));
 	ft_start_game(&g);
 	free_all(&g);
 	return(0);

@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 15:28:55 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/28 17:48:16 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/29 18:01:18 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,6 @@ int		check_available2(t_game *g, char **map, int i, int j)
 		return (1);
 	if (map[i][j] - '0' > WALL_NUM - 3)
 		return (1);
-	else if (map[i][j] > '1' && map[i][j] <= '9')
-	{
-		g->item[g->item_cnt].x = j + 0.5;
-		g->item[g->item_cnt].y = i + 0.5;
-		g->item[g->item_cnt].tex_num = map[i][j] - '0' + 2;
-		map[i][j] = '0';
-	}
 	return (0);
 }
 
@@ -63,20 +56,31 @@ int		check_available(t_game *g, char **map, int i, int j)
 	return (0);
 }
 
-void	find_location_of_player(t_game *g, int i, int j)
+void	find_location_of_element(t_game *g, int i, int j, int flag)
 {
-	g->x = j;
-	g->y = i;
-	g->player_cnt += 1;
-	if (g->map[i][j] == 'S')
-		rotate_vector(g, 180);
-	else if (g->map[i][j] == 'W')
-		rotate_vector(g, -90);
-	else if (g->map[i][j] == 'E')
-		rotate_vector(g, 90);
-	else if (g->map[i][j] == 'N')
-		rotate_vector(g, 0);
-	g->map[i][j] = '0';
+	if (flag)
+	{
+		g->x = j;
+		g->y = i;
+		g->player_cnt += 1;
+		if (g->map[i][j] == 'S')
+			rotate_vector(g, 180);
+		else if (g->map[i][j] == 'W')
+			rotate_vector(g, -90);
+		else if (g->map[i][j] == 'E')
+			rotate_vector(g, 90);
+		else if (g->map[i][j] == 'N')
+			rotate_vector(g, 0);
+		g->map[i][j] = '0';
+	}
+	else
+	{
+		g->item[g->item_cnt].x = j + 0.5;
+		g->item[g->item_cnt].y = i + 0.5;
+		g->item[g->item_cnt].tex_num = g->map[i][j] - '0' + 2;
+		g->map[i][j] = '0';
+		g->item_cnt += 1;
+	}
 }
 
 int		map_available_test(t_game *g)
@@ -96,7 +100,9 @@ int		map_available_test(t_game *g)
 				return (1);
 			if (g->map[i][j] == 'N' || g->map[i][j] == 'S' ||
 					g->map[i][j] == 'E' || g->map[i][j] == 'W')
-				find_location_of_player(g, i, j);
+				find_location_of_element(g, i, j, 1);
+			else if (g->map[i][j] > '1' && g->map[i][j] <= '9')
+				find_location_of_element(g, i, j, 0);
 			j++;
 		}
 		i++;

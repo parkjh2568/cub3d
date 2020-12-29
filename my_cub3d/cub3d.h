@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 10:42:11 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/28 17:24:03 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/29 17:25:53 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,10 +116,25 @@ typedef struct	s_raycast
 
 typedef struct	s_painter
 {
+	int			u_div;
+	int			v_div;
+	double		v_move;
+	int			color;
 	int			d_start;
 	int			d_end;
+	int			d_start_x;
+	int			d_end_x;
 	int			tex_num;
 	double		wall_x;
+	double		spt_x;
+	double		spt_y;
+	double		inv;
+	double		trans_x;
+	double		trans_y;
+	int			spt_screen_x;
+	int			v_move_screen;
+	int			spt_height;
+	int			spt_width;
 	int			tex_x;
 	int			tex_y;
 	double		tex_pos;
@@ -135,6 +150,12 @@ typedef	struct	s_item
 	int			tex_num;
 }				t_item;
 
+typedef struct	s_pair
+{
+	double		first;
+	int			second;
+}				t_pair;
+
 typedef struct	s_game
 {
 	void		*mlx;
@@ -144,8 +165,13 @@ typedef struct	s_game
 
 	int			**buf;
 	int			**texture;
+	double		*z_buf;
+
+	int			key_trig[150];
 
 	t_item		item[100];
+	int			item_order[100];
+	double		item_dist[100];
 	int			item_cnt;
 
 	unsigned int bgcolor[2];
@@ -190,12 +216,18 @@ int				map_available_test(t_game *g);
 int				map_init_and_available_test(t_game *g);
 void			rotate_vector(t_game *g, int deg);
 void			ft_start_game(t_game *g);
+int				press_key(int key, t_game *g);
+int				release_key(int key, t_game *g);
 void			ft_key_press_up_down(t_game *g, int flag);
 void			ft_key_press_rot_left_right(t_game *g, int flag);
 void			ft_key_press_left_right(t_game *g, int flag);
+void			key_action(t_game *g);
+int				input_esc(t_game *g);
 void			ray_casting(t_game *g);
 void			put_in_texture(t_game *g);
 void			draw_bg(t_game *g);
 void			set_painter(t_game *g, t_raycast *ray, t_painter *p);
 void			draw_wall(t_game *g, t_raycast *ray, t_painter *p, int j);
+void			draw_item(t_game *g);
+int				set_bright(int color, t_game *g, int height);
 #endif

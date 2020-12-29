@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_casting.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhypar <junhypar@student.42seoul.kr      +#+  +:+       +#+        */
+/*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/25 20:39:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/28 17:20:13 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/29 17:08:00 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,14 @@ void	set_ray(t_game *g, t_raycast *ray, int i)
 void	draw_start(t_game *g, t_raycast *ray, int i)
 {
 	t_painter	p;
-	int			ct;
 
-	ct = g->item_count;
 	set_painter(g, ray, &p);
 	draw_wall(g, ray, &p, i);
 }
 
 void	spread_ray(t_raycast *ray, t_game *g)
 {
-	while(ray->hit == 0)
+	while (ray->hit == 0)
 	{
 		if (ray->side_dist_x < ray->side_dist_y)
 		{
@@ -85,12 +83,12 @@ void	spread_ray(t_raycast *ray, t_game *g)
 
 void	ray_casting(t_game *g)
 {
-	t_raycast ray;
-	int i;
+	t_raycast	ray;
+	int			i;
 
 	draw_bg(g);
 	i = 0;
-	while(i < g->width)
+	while (i < g->width)
 	{
 		set_ray(g, &ray, i);
 		spread_ray(&ray, g);
@@ -100,6 +98,7 @@ void	ray_casting(t_game *g)
 			ray.how_long = (ray.y - g->y + (1 - ray.step_y) / 2) / ray.dir_y;
 		ray.wall_height = (int)(g->height / ray.how_long);
 		draw_start(g, &ray, i);
+		g->z_buf[i] = ray.how_long;
 		i++;
 	}
 }
