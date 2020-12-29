@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:10:12 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/29 18:32:19 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/29 19:29:39 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,9 @@ void			draw_item(t_game *g)
 	i = 0;
 	while (i < g->item_cnt)
 	{
-		p->tex_num = g->item[g->item_order[i]].tex_num;
+		p.tex_num = g->item[g->item_order[i]].tex_num;
 		set_sprite_painter(g, &p, i);
-		draw_sprite_to_buf(g, &p, i, p->d_start_x);
+		draw_sprite_to_buf(g, &p, i, p.d_start_x);
 		i++;
 	}
 }
