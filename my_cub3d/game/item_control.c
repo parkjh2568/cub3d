@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:10:12 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/29 19:29:39 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/29 20:58:15 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void			sort_items(int *order, double *dist, int amount)
 		i++;
 	}
 	sort_order(items, amount);
+	i = 0;
 	while (i < amount)
 	{
 		dist[i] = items[amount - i - 1].first;
@@ -127,7 +128,7 @@ void			draw_item(t_game *g)
 	while (i < g->item_cnt)
 	{
 		g->item_order[i] = i;
-		g->item_dist[i] = ((g->x - g->item[i].x) *
+		g->item_dist[i] = sqrt((g->x - g->item[i].x) *
 				(g->x - g->item[i].x) + (g->y - g->item[i].y) *
 				(g->y - g->item[i].y));
 		i++;
