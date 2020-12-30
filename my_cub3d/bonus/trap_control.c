@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:10:12 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/30 23:52:33 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/29 20:58:15 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void			set_sprite_painter(t_game *g, t_painter *p, int i)
 		p->d_end_x = g->width - 1;
 }
 
-void			draw_sprite_to_buf(t_game *g, t_painter *p, int x)
+void			draw_sprite_to_buf(t_game *g, t_painter *p, int i, int x)
 {
 	int y;
 	int d;
@@ -139,7 +139,7 @@ void			draw_item(t_game *g)
 	{
 		p.tex_num = g->item[g->item_order[i]].tex_num;
 		set_sprite_painter(g, &p, i);
-		draw_sprite_to_buf(g, &p, p.d_start_x);
+		draw_sprite_to_buf(g, &p, i, p.d_start_x);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 11:18:03 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/26 18:33:30 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/30 23:51:07 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int		check_error(int gnl_config, int divide_config)
 
 void	config_map_name(char *map_name, int *fd, t_game *g)
 {
-	char	*out;
 	int		i;
 	int		len;
 

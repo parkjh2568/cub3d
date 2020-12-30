@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 10:42:11 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/30 15:01:09 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/30 23:48:36 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,8 @@ typedef struct	s_game
 	int			**texture;
 	double		*z_buf;
 
+	int			hp;
+
 	int			save_flag;
 
 	int			key_trig[150];
@@ -234,4 +236,5 @@ void			draw_wall(t_game *g, t_raycast *ray, t_painter *p, int j);
 void			draw_item(t_game *g);
 int				set_bright(int color, t_game *g, int height);
 void			start_save_bmp(t_game *g);
+int				*config_width_height(int width, int height);
 #endif

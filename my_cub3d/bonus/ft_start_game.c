@@ -6,11 +6,12 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/25 17:32:51 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/31 00:05:54 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 00:06:25 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+#include "./bonus.h"
 
 void	image_draw(t_game *g)
 {
@@ -36,6 +37,7 @@ int		display(t_game *g)
 	key_action(g);
 	ray_casting(g);
 	draw_item(g);
+	start_bonus(g);
 	if (g->save_flag == 1)
 		start_save_bmp(g);
 	image_draw(g);
@@ -71,13 +73,12 @@ void	set_field(t_game *g)
 
 void	ft_start_game(t_game *g)
 {
-	int	*data;
+	int *data;
 
 	g->mlx = mlx_init();
 	data = config_width_height(g->width, g->height);
 	g->width = data[0];
 	g->height = data[1];
-	free(data);
 	set_field(g);
 	g->win = mlx_new_window(g->mlx, g->width, g->height, "plz start");
 	g->img.img = mlx_new_image(g->mlx, g->width, g->height);

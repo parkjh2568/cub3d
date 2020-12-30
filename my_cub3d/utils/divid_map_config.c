@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 12:04:53 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/28 13:00:24 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/30 23:51:40 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,19 @@
 int		map_resol(char *out, t_game *g)
 {
 	int i;
-	int config;
 
 	i = 0;
 	g->width = 0;
 	g->height = 0;
 	i = no_space(out, i);
-	g->width = ft_atoi(out + i);
+	if ((g->width = ft_atoi(out + i)) < 0)
+		return (WRONG_RESOL_INPUT);;
 	i = skip_resol_word(out, i, 0);
 	if (i == -1)
 		return (WRONG_RESOL_INPUT);
 	i = no_space(out, i);
-	g->height = ft_atoi(out + i);
+	if ((g->height = ft_atoi(out + i)) < 0)
+		return (WRONG_RESOL_INPUT);
 	i = skip_resol_word(out, i, 0);
 	if (i == -1)
 		return (WRONG_RESOL_INPUT);
@@ -57,7 +58,6 @@ int		input_wall_name(char *out, t_game *g, int flag)
 int		input_bg_color2(char *out, t_game *g, int flag, int i)
 {
 	unsigned int	j;
-	int				config;
 
 	if ((j = ft_atoi(&out[i])) > 255 || ft_atoi(&out[i]) < 0)
 		return (WRONG_BG_COLOR_INPUT);
@@ -75,7 +75,6 @@ int		input_bg_color(char *out, t_game *g, int flag)
 {
 	int				i;
 	unsigned int	j;
-	int				config;
 
 	i = 0;
 	g->bgcolor[flag] = 0;

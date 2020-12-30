@@ -6,11 +6,11 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 12:03:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/30 20:44:09 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/30 21:07:17 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./cub3d.h"
+#include "../cub3d.h"
 
 void	free_all(t_game *g)
 {
@@ -122,6 +122,7 @@ void	reset_struct(t_game *g)
 		g->key_trig[i] = 0;
 		i++;
 	}
+	g->hp = 10;
 	g->save_flag = 0;
 	g->row = 0;
 	g->col = 0;
