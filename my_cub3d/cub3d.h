@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 10:42:11 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/29 17:25:53 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/30 15:01:09 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 # define WRONG_BG_COLOR_INPUT 8
 # define MAP_IS_NOT_AVAILABLE 9
 # define SO_MANY_PLAYER_IN_MAP 10
+# define ERROR_OF_SAVE 11
 
 # define FLOOR 0
 # define CEILLING 1
@@ -167,6 +168,8 @@ typedef struct	s_game
 	int			**texture;
 	double		*z_buf;
 
+	int			save_flag;
+
 	int			key_trig[150];
 
 	t_item		item[100];
@@ -230,4 +233,5 @@ void			set_painter(t_game *g, t_raycast *ray, t_painter *p);
 void			draw_wall(t_game *g, t_raycast *ray, t_painter *p, int j);
 void			draw_item(t_game *g);
 int				set_bright(int color, t_game *g, int height);
+void			start_save_bmp(t_game *g);
 #endif

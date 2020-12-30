@@ -1,0 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   screenshort.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junhypar <junhypar@student.42seoul.kr      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/30 14:29:16 by junhypar          #+#    #+#             */
+/*   Updated: 2020/12/30 17:14:15 by junhypar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../cub3d.h"
+
+static void	bmp_type(t_game *g, int fd)
+{
+	int tmp;
+	int i;
+	unsigned char buf[14];
+
+	i = 0;
+	while (i < 14)
+		buf[i++] = 0;
+	buf[0] = (unsigned char)('B');
+	buf[1] = (unsigned char)('M');
+	tmp = 4 * (g->width * g->height) + 14 + 40;
+	buf[2] = (unsigned char)(tmp % 256);
+	buf[3] = (unsigned char)(tmp / 256);
+	buf[4] = (unsigned char)(tmp / 256 / 256 % 256);
+	buf[5] = (unsigned char)(tmp / 256 / 256 / 256);
+	buf[10] = (unsigned char)(54);
+}
+
+int		save_bmp(t_game *g)
+{
+	int i;
+	int fd;
+
+	i = 0;
+	fd = (!(fd - open("screenshort.bmp", O_CREAT | O_WRONLY | O_TRUNC, 0700)))
+		return (1);
+	bmp_type(g, fd);
+}
+void	start_save_bmp(t_game *g)
+{
+	if (!(save_bmp(g)))
+		ft_error(ERROR_OF_SAVE, g);
+	else
+	{
+		free_all(g);
+		exit(0);
+	}
+}

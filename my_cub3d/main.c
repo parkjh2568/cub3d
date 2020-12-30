@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 12:03:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/29 18:18:46 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/30 17:37:58 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_all(t_game *g)
 {
 	int i;
 
-	printf("\nwidth = %d, height= = %d",g->width, g->height);
+/*	printf("\nwidth = %d, height= = %d",g->width, g->height);
 	printf("\nNO_wall_name = %s",g->wall[NO].name);
 	printf("\nSO_wall_name = %s",g->wall[SO].name);
 	printf("\nWE_wall_name = %s",g->wall[WE].name);
@@ -51,7 +51,7 @@ void	free_all(t_game *g)
 	{
 		printf("%s\n",g->map[i]);
 		i++;
-	}
+	}*/
 
 	i = NO;
 	while(i <= S)
@@ -122,6 +122,7 @@ void	reset_struct(t_game *g)
 		g->key_trig[i] = 0;
 		i++;
 	}
+	g->save_flag = 0;
 	g->row = 0;
 	g->col = 0;
 	g->x = 0;
@@ -144,6 +145,8 @@ int		main(int argc, char *argv[])
 	reset_struct(&g);
 	if ((argc == 3 && ft_strncmp(argv[2], "--save", 9)) || argc < 2 || argc > 3)
 		ft_error(INPUT_ERROR, &g);
+	if (argc == 3)
+		g.save_flag = 1;
 	if ((er = ft_read_map(&g, argv[1])))
 		ft_error(er, &g);
 	if ((er = map_init_and_available_test(&g)))

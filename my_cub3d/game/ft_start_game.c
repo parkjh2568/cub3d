@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/25 17:32:51 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/29 17:03:36 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/30 14:55:36 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int		display(t_game *g)
 	key_action(g);
 	ray_casting(g);
 	draw_item(g);
+	if (g->save_flag == 1)
+		start_save_bmp(g);
 	image_draw(g);
 	return (0);
 }
