@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hp_mini_map_control.c                              :+:      :+:    :+:   */
+/*   start_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 20:59:03 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/30 22:42:57 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 16:15:04 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,51 @@ void	draw_hp(t_game *g, t_b_painter *p)
 	p->wanted_color = 0x7f000000;
 	color_control(p, DIVIDE_RGB, 0);
 	draw_somting(g, p);
-	p->d_start_x = (g->width / 3) + 1;
-	p->d_end_x = (g->width / 3) * 2 - 1;
-	p->d_start_y = (g->height / 30) * 2 + 1;
-	p->d_end_y = (g->height / 30) * 3 - 1;
+	p->d_start_x = (g->width / 3) + (int)((double)(g->width / 3) *
+			(double)((10 - g->hp) / (double)20));
+	p->d_end_x = (g->width / 3) * 2 -
+		 + (int)((double)(g->width / 3) * (double)((10 - g->hp) / (double)20));
+	p->d_start_y = (g->height / 30) * 2 + 5;
+	p->d_end_y = (g->height / 30) * 3 - 5;
 	p->wanted_color = 0x10FF0000;
 	color_control(p, DIVIDE_RGB, 0);
 	draw_somting(g, p);
+}
+
+void	gun_img_config(t_game *g)
+{
+	g->item[g->item_cnt].x = g->x + 0.1 * g->dir_x;
+	g->item[g->item_cnt].y = g->y + 0.1 * g->dir_y;
+	g->item[g->item_cnt].flag = 1;
+	if (g->click)
+	{
+		if (g->timer > 0)
+		{
+			g->item[g->item_cnt].tex_num = 11;
+			g->timer -= 1;
+		}
+		else		
+		{
+			g->item[g->item_cnt].tex_num = 10;
+			if (g->timer < -3)
+				g->timer = 3;
+			else
+				g->timer -= 1;
+		}
+	}
+	else
+	{
+		g->item[g->item_cnt].tex_num = 10;
+		g->timer = 3;
+	}
 }
 
 void	start_bonus(t_game *g)
 {
 	t_b_painter p;
 
+	gun_img_config(g);
+	draw_ex_item(g);
 	draw_hp(g, &p);
-
+	object_action(g);
 }

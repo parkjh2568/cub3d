@@ -6,64 +6,14 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:10:12 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/29 20:58:15 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 16:20:07 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+#include "./bonus.h"
 
-void			sort_order(t_pair *orders, int amount)
-{
-	t_pair	tmp;
-	int		i;
-	int		j;
-
-	i = 0;
-	while (i < amount)
-	{
-		j = 0;
-		while (j < amount - 1)
-		{
-			if (orders[j].first > orders[j + 1].first)
-			{
-				tmp.first = orders[j].first;
-				tmp.second = orders[j].second;
-				orders[j].first = orders[j + 1].first;
-				orders[j].second = orders[j + 1].second;
-				orders[j + 1].first = tmp.first;
-				orders[j + 1].second = tmp.second;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-void			sort_items(int *order, double *dist, int amount)
-{
-	t_pair	*items;
-	int		i;
-
-	i = 0;
-	items = (t_pair *)malloc(sizeof(t_pair) * amount);
-	while (i < amount)
-	{
-		items[i].first = dist[i];
-		items[i].second = order[i];
-		i++;
-	}
-	sort_order(items, amount);
-	i = 0;
-	while (i < amount)
-	{
-		dist[i] = items[amount - i - 1].first;
-		order[i] = items[amount - i - 1].second;
-		i++;
-	}
-	free(items);
-}
-
-void			set_sprite_painter(t_game *g, t_painter *p, int i)
+static void			set_sprite_painter(t_game *g, t_painter *p, int i)
 {
 	p->spt_x = g->item[g->item_order[i]].x - g->x;
 	p->spt_y = g->item[g->item_order[i]].y - g->y;
@@ -88,7 +38,7 @@ void			set_sprite_painter(t_game *g, t_painter *p, int i)
 		p->d_end_x = g->width - 1;
 }
 
-void			draw_sprite_to_buf(t_game *g, t_painter *p, int i, int x)
+static void			draw_sprite_to_buf(t_game *g, t_painter *p, int x)
 {
 	int y;
 	int d;
@@ -116,30 +66,58 @@ void			draw_sprite_to_buf(t_game *g, t_painter *p, int i, int x)
 	}
 }
 
-void			draw_item(t_game *g)
+void			check_div_move(t_game *g, t_painter *p)
 {
-	t_painter	p;
-	int			i;
+	if (p->tex_num == 7)
+	{
+		p->u_div = 1.3;
+		p->v_div = 1.3;
+		p->v_move = g->height / 4;
+	}
+	else if (p->tex_num == 8)
+	{
+		p->u_div = 2;
+		p->v_div = 2;
+		p->v_move = g->height / 3;;
+	}
+	else if (p->tex_num == 10)
+	{
+		p->u_div = 50;
+		p->v_div = 30;
+		p->v_move = (double)g->height / 28;
+	}
+	else if (p->tex_num == 11)
+	{
+		p->u_div = 20;
+		p->v_div = 20;
+		p->v_move = (double)g->height / 35;
+	}
+	else if (p->tex_num == 12)
+	{
+		p->u_div = 1.5;
+		p->v_div = 1.3;
+		p->v_move = (g->height / 4);
+	}
+	else if (p->tex_num == 13)
+	{
+		p->u_div = 1.5;
+		p->v_div = 1.3;
+		p->v_move = (g->height / 4);
+	}
+	else
+	{
+		p->u_div = 3;
+		p->v_div = 3;
+		p->v_move = 0;
+	}
+}
 
-	i = 0;
-	p.u_div = 2;
-	p.v_div = 2;
-	p.v_move = 200.0;
-	while (i < g->item_cnt)
-	{
-		g->item_order[i] = i;
-		g->item_dist[i] = sqrt((g->x - g->item[i].x) *
-				(g->x - g->item[i].x) + (g->y - g->item[i].y) *
-				(g->y - g->item[i].y));
-		i++;
-	}
-	sort_items(g->item_order, g->item_dist, g->item_cnt);
-	i = 0;
-	while (i < g->item_cnt)
-	{
-		p.tex_num = g->item[g->item_order[i]].tex_num;
-		set_sprite_painter(g, &p, i);
-		draw_sprite_to_buf(g, &p, i, p.d_start_x);
-		i++;
-	}
+void			draw_sprite(t_game *g, t_painter *p, int i)
+{
+	p->u_div = 1.3;
+	p->v_div = 1;
+	p->v_move = 0;
+	p->tex_num = g->item[g->item_order[i]].tex_num;
+	set_sprite_painter(g, p, i);
+	draw_sprite_to_buf(g, p, p->d_start_x);
 }

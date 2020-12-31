@@ -6,11 +6,12 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 15:28:55 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/30 23:53:37 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 16:11:08 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+#include "./bonus.h"
 
 int		check_available2(char **map, int i, int j)
 {
@@ -60,6 +61,15 @@ void	find_location_of_element(t_game *g, int i, int j, int flag)
 {
 	if (flag)
 	{
+		g->item[g->item_cnt].x = j + 0.5;
+		g->item[g->item_cnt].y = i + 0.5;
+		g->item[g->item_cnt].tex_num = g->map[i][j] - '0' + 2;
+		g->item[g->item_cnt].flag = 0;
+		g->map[i][j] = '0';
+		g->item_cnt += 1;
+	}
+	else
+	{
 		g->x = j;
 		g->y = i;
 		g->player_cnt += 1;
@@ -72,14 +82,6 @@ void	find_location_of_element(t_game *g, int i, int j, int flag)
 		else if (g->map[i][j] == 'N')
 			rotate_vector(g, 0);
 		g->map[i][j] = '0';
-	}
-	else
-	{
-		g->item[g->item_cnt].x = j + 0.5;
-		g->item[g->item_cnt].y = i + 0.5;
-		g->item[g->item_cnt].tex_num = g->map[i][j] - '0' + 2;
-		g->map[i][j] = '0';
-		g->item_cnt += 1;
 	}
 }
 
@@ -100,9 +102,12 @@ int		map_available_test(t_game *g)
 				return (1);
 			if (g->map[i][j] == 'N' || g->map[i][j] == 'S' ||
 					g->map[i][j] == 'E' || g->map[i][j] == 'W')
-				find_location_of_element(g, i, j, 1);
-			else if (g->map[i][j] > '1' && g->map[i][j] <= '9')
 				find_location_of_element(g, i, j, 0);
+			else if (g->map[i][j] == '2')
+				find_location_of_element(g, i, j, 1);
+			else if ((g->map[i][j] > '6' && g->map[i][j] <= '9') ||
+					g->map[i][j] == 'M')
+				find_extra_object_location(g, i, j);
 			j++;
 		}
 		i++;

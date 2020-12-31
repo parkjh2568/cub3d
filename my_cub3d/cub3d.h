@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 10:42:11 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/30 23:48:36 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 17:00:38 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define KEY_D 2
 # define KEY_LEFT_ARROW 123
 # define KEY_RIGHT_ARROW 124
-
+# define _SPACE 49
 # define X_PLAN 0
 # define Y_PLAN 1
 
@@ -63,6 +63,26 @@
 # define WE 2
 # define EA 3
 # define S 4
+
+# define EX_OBJ_NUM 17
+# define JAVALA 0
+# define DRIFTER 1
+# define AUTO_DOOR 2
+# define SECRET_DOOR 3
+# define BARRER 4
+# define TRAP 5
+# define POTION 6
+# define STATIC_GUN 7
+# define FIRE_GUN 8
+# define STATIC_ENERMY 9
+# define DEFEAT_ENERMY 10
+# define LV 11
+# define ONE 12
+# define TWO 13
+# define THREE 14
+# define FOUR 15
+# define FIVE 16
+# define EMPTY 20
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100
@@ -117,8 +137,8 @@ typedef struct	s_raycast
 
 typedef struct	s_painter
 {
-	int			u_div;
-	int			v_div;
+	double		u_div;
+	double		v_div;
 	double		v_move;
 	int			color;
 	int			d_start;
@@ -142,6 +162,7 @@ typedef struct	s_painter
 	double		step;
 	int			tex_width;
 	int			tex_height;
+	int			flag;
 }				t_painter;
 
 typedef	struct	s_item
@@ -149,6 +170,8 @@ typedef	struct	s_item
 	double		x;
 	double		y;
 	int			tex_num;
+	int			flag;
+	int			timer;
 }				t_item;
 
 typedef struct	s_pair
@@ -156,6 +179,12 @@ typedef struct	s_pair
 	double		first;
 	int			second;
 }				t_pair;
+
+typedef	struct	s_tex_info
+{
+	int			width;
+	int			height;
+}				t_tex_info;
 
 typedef struct	s_game
 {
@@ -166,17 +195,25 @@ typedef struct	s_game
 
 	int			**buf;
 	int			**texture;
+
+	int			**ex_texture;
+	t_tex_info	info_tex[EMPTY];
+
 	double		*z_buf;
 
 	int			hp;
+	int			lv;
+	int			exp;
 
 	int			save_flag;
 
 	int			key_trig[150];
 
-	t_item		item[100];
-	int			item_order[100];
-	double		item_dist[100];
+	int			click;
+	int			timer;
+	t_item		item[200];
+	int			item_order[200];
+	double		item_dist[200];
 	int			item_cnt;
 
 	unsigned int bgcolor[2];

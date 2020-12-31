@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 12:03:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/30 21:07:17 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 17:01:01 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_all(t_game *g)
 {
 	int i;
 
-/*	printf("\nwidth = %d, height= = %d",g->width, g->height);
+	printf("\nwidth = %d, height= = %d",g->width, g->height);
 	printf("\nNO_wall_name = %s",g->wall[NO].name);
 	printf("\nSO_wall_name = %s",g->wall[SO].name);
 	printf("\nWE_wall_name = %s",g->wall[WE].name);
@@ -51,7 +51,7 @@ void	free_all(t_game *g)
 	{
 		printf("%s\n",g->map[i]);
 		i++;
-	}*/
+	}
 
 	i = NO;
 	while(i <= S)
@@ -97,6 +97,17 @@ void	free_all(t_game *g)
 	}
 	if (g->z_buf)
 		free(g->z_buf);
+
+	if (g->ex_texture)
+	{
+		i = 0;
+		while(i < EX_OBJ_NUM)
+		{
+			free(g->ex_texture[i]);
+			i++;
+		}
+		free(g->ex_texture);
+	}
 }
 
 void	reset_struct(t_game *g)
@@ -113,9 +124,12 @@ void	reset_struct(t_game *g)
 	}
 	g->buf = 0;
 	g->texture = 0;
+	g->ex_texture = 0;
 	g->item_cnt = 0;
 	g->z_buf = 0;
-
+	g->click = 0;
+	g->lv = 1;
+	g->exp = 0;
 	i = 0;
 	while (i < 150)
 	{
@@ -152,7 +166,6 @@ int		main(int argc, char *argv[])
 		ft_error(er, &g);
 	if ((er = map_init_and_available_test(&g)))
 		ft_error(er, &g);
-	g.z_buf = malloc(sizeof(double) * (g.width));
 	ft_start_game(&g);
 	free_all(&g);
 	return(0);

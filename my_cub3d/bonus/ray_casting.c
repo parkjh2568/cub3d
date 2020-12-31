@@ -6,11 +6,12 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/25 20:39:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/29 17:08:00 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 14:56:19 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+#include "./bonus.h"
 
 void	set_ray2(t_game *g, t_raycast *ray)
 {
@@ -54,7 +55,10 @@ void	draw_start(t_game *g, t_raycast *ray, int i)
 	t_painter	p;
 
 	set_painter(g, ray, &p);
-	draw_wall(g, ray, &p, i);
+	if (p.flag)
+		draw_ex_wall(g, ray, &p, i);
+	else
+		draw_wall(g, ray, &p, i);
 }
 
 void	spread_ray(t_raycast *ray, t_game *g)
@@ -75,7 +79,8 @@ void	spread_ray(t_raycast *ray, t_game *g)
 		}
 		if (g->map[ray->y][ray->x] > '0')
 		{
-			if (g->map[ray->y][ray->x] == '1')
+			if (g->map[ray->y][ray->x] == '1' || (g->map[ray->y][ray->x] >=
+					'3' && g->map[ray->y][ray->x] <= '6'))
 				ray->hit = 1;
 		}
 	}

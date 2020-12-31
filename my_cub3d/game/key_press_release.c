@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 16:42:14 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/29 17:03:23 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 15:52:51 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int		press_key(int key, t_game *g)
 		g->key_trig[KEY_Q] = 1;
 	if ((key == KEY_E || key == KEY_RIGHT_ARROW) && g->key_trig[KEY_E] == 0)
 		g->key_trig[KEY_E] = 1;
+	if (key == _SPACE)
+		g->click = 1;
 	return (0);
 }
 
@@ -48,6 +50,8 @@ int		release_key(int key, t_game *g)
 		g->key_trig[KEY_Q] = 0;
 	if ((key == KEY_E || key == KEY_RIGHT_ARROW) && g->key_trig[KEY_E] == 1)
 		g->key_trig[KEY_E] = 0;
+	if (key == _SPACE)
+		g->click = 0;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/28 12:03:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/30 20:44:09 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 12:02:37 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,6 @@ int		main(int argc, char *argv[])
 		ft_error(er, &g);
 	if ((er = map_init_and_available_test(&g)))
 		ft_error(er, &g);
-	g.z_buf = malloc(sizeof(double) * (g.width));
 	ft_start_game(&g);
 	free_all(&g);
 	return(0);

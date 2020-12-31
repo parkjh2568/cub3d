@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/25 17:32:51 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/31 00:06:25 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 13:07:42 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int		display(t_game *g)
 {
 	key_action(g);
 	ray_casting(g);
-	draw_item(g);
 	start_bonus(g);
 	if (g->save_flag == 1)
 		start_save_bmp(g);
@@ -79,7 +78,10 @@ void	ft_start_game(t_game *g)
 	data = config_width_height(g->width, g->height);
 	g->width = data[0];
 	g->height = data[1];
+	free(data);
+	g->z_buf = malloc(sizeof(double) * g->width);
 	set_field(g);
+	put_in_ex_texture(g);
 	g->win = mlx_new_window(g->mlx, g->width, g->height, "plz start");
 	g->img.img = mlx_new_image(g->mlx, g->width, g->height);
 	g->img.data = (int *)mlx_get_data_addr(g->img.img, &g->img.bpp,

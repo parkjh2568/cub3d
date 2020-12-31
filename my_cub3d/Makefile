@@ -6,7 +6,7 @@
 #    By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/28 10:41:18 by junhypar          #+#    #+#              #
-#    Updated: 2020/12/31 00:07:44 by junhypar         ###   ########.fr        #
+#    Updated: 2020/12/31 14:38:20 by junhypar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,11 @@ NAME	= cub3D
 
 LIBNAME = libcub3D.a
 
-SRCS	= ./gnl/get_next_line.c ./gnl/get_next_line_utils.c ./utils/ft_get_radian.c ./utils/ft_error.c ./utils/read_map_file.c ./utils/divid_map_config.c ./utils/string_control.c ./utils/init_map.c ./utils/map_init_matrix.c ./game/key_action.c ./game/put_int_texture.c ./game/draw_wall.c ./game/item_control.c ./game/key_press_release.c ./game/screenshort.c ./game/find_width_height.c
+SRCS	= ./gnl/get_next_line.c ./gnl/get_next_line_utils.c ./utils/ft_get_radian.c ./utils/ft_error.c ./utils/read_map_file.c ./utils/divid_map_config.c ./utils/string_control.c ./utils/init_map.c ./utils/map_init_matrix.c ./game/key_action.c ./game/put_int_texture.c ./game/key_press_release.c ./game/screenshort.c ./game/find_width_height.c
 
-SRCS_O	= ./game/ft_start_game.c main.c ./utils/map_available_test.c ./game/ray_casting.c
+SRCS_O	= ./game/ft_start_game.c main.c ./utils/map_available_test.c ./game/ray_casting.c ./game/item_control.c ./game/draw_wall.c
 
-SRCS_B	= ./bonus/ft_start_game.c ./bonus/main.c ./bonus/map_available_test.c ./bonus/hp_mini_map_control.c ./bonus/ray_casting.c 
+SRCS_B	= ./bonus/ft_start_game.c ./bonus/main.c ./bonus/map_available_test.c ./bonus/start_bonus.c ./bonus/ray_casting.c ./bonus/extra_object_control.c ./bonus/extra_object_utils.c ./bonus/item_control.c ./bonus/object_action.c ./bonus/draw_wall.c ./bonus/draw_ex_wall.c
 
 OBJS	= ${SRCS:.c=.o}
 

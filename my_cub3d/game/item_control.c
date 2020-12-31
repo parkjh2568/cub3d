@@ -6,13 +6,13 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:10:12 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/30 23:52:33 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 13:16:43 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void			sort_order(t_pair *orders, int amount)
+static void			sort_order(t_pair *orders, int amount)
 {
 	t_pair	tmp;
 	int		i;
@@ -39,7 +39,7 @@ void			sort_order(t_pair *orders, int amount)
 	}
 }
 
-void			sort_items(int *order, double *dist, int amount)
+static void			sort_items(int *order, double *dist, int amount)
 {
 	t_pair	*items;
 	int		i;
@@ -63,7 +63,7 @@ void			sort_items(int *order, double *dist, int amount)
 	free(items);
 }
 
-void			set_sprite_painter(t_game *g, t_painter *p, int i)
+static void			set_sprite_painter(t_game *g, t_painter *p, int i)
 {
 	p->spt_x = g->item[g->item_order[i]].x - g->x;
 	p->spt_y = g->item[g->item_order[i]].y - g->y;
@@ -88,7 +88,7 @@ void			set_sprite_painter(t_game *g, t_painter *p, int i)
 		p->d_end_x = g->width - 1;
 }
 
-void			draw_sprite_to_buf(t_game *g, t_painter *p, int x)
+static void			draw_sprite_to_buf(t_game *g, t_painter *p, int x)
 {
 	int y;
 	int d;
@@ -137,9 +137,11 @@ void			draw_item(t_game *g)
 	i = 0;
 	while (i < g->item_cnt)
 	{
-		p.tex_num = g->item[g->item_order[i]].tex_num;
-		set_sprite_painter(g, &p, i);
-		draw_sprite_to_buf(g, &p, p.d_start_x);
+		if ((p.tex_num = g->item[g->item_order[i]].tex_num) == 4)
+		{
+			set_sprite_painter(g, &p, i);
+			draw_sprite_to_buf(g, &p, p.d_start_x);
+		}
 		i++;
 	}
 }

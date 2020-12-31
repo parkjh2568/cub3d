@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/25 18:54:20 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/29 18:22:49 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 14:48:55 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	ft_key_press_up_down(t_game *g, int flag)
 
 	mv_x = g->dir_x * g->mov_speed * flag;
 	mv_y = g->dir_y * g->mov_speed * flag;
-	if (g->map[(int)g->y][(int)(g->x + mv_x)] == '0')
+	if (g->map[(int)g->y][(int)(g->x + mv_x * 2)] == '0')
 		g->x += mv_x;
-	if (g->map[(int)(g->y + mv_y)][(int)g->x] == '0')
+	if (g->map[(int)(g->y + mv_y * 2)][(int)g->x] == '0')
 		g->y += mv_y;
 }
 
@@ -32,9 +32,9 @@ void	ft_key_press_left_right(t_game *g, int flag)
 
 	mv_x = g->dir_y * g->mov_speed * flag;
 	mv_y = g->dir_x * g->mov_speed * flag * (-1);
-	if (g->map[(int)g->y][(int)(g->x + mv_x)] == '0')
+	if (g->map[(int)g->y][(int)(g->x + mv_x * 2)] == '0')
 		g->x += mv_x;
-	if (g->map[(int)(g->y + mv_y)][(int)g->x] == '0')
+	if (g->map[(int)(g->y + mv_y * 2)][(int)g->x] == '0')
 		g->y += mv_y;
 }
 
