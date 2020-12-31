@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   screenshort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhypar <junhypar@student.42seoul.kr      +#+  +:+       +#+        */
+/*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 14:29:16 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/30 17:44:12 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 20:49:28 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static void	bmp_type(t_game *g, int fd)
+static void			bmp_type(t_game *g, int fd)
 {
-	int tmp;
-	int i;
-	unsigned char buf[14];
+	int				tmp;
+	int				i;
+	unsigned char	buf[14];
 
 	i = 0;
 	while (i < 14)
@@ -32,7 +32,7 @@ static void	bmp_type(t_game *g, int fd)
 	write(fd, buf, 14);
 }
 
-static void	bmp_info(t_game *g, int fd)
+static void			bmp_info(t_game *g, int fd)
 {
 	int				i;
 	unsigned char	buf[40];
@@ -54,7 +54,7 @@ static void	bmp_info(t_game *g, int fd)
 	write(fd, buf, 40);
 }
 
-static void	bmp_data(t_game *g, int fd)
+static void			bmp_data(t_game *g, int fd)
 {
 	int				tmp;
 	int				i;
@@ -67,7 +67,7 @@ static void	bmp_data(t_game *g, int fd)
 		i = 0;
 		while (i < g->width)
 		{
-			tmp = g->buf[j][i];;
+			tmp = g->buf[j][i];
 			buf[0] = (unsigned char)(tmp % 256);
 			buf[1] = (unsigned char)(tmp / 256 % 256);
 			buf[2] = (unsigned char)(tmp / 256 / 256);
@@ -79,10 +79,10 @@ static void	bmp_data(t_game *g, int fd)
 	}
 }
 
-int		save_bmp(t_game *g)
+int					save_bmp(t_game *g)
 {
-	int i;
-	int fd;
+	int	i;
+	int	fd;
 
 	i = 0;
 	if (!(fd = open("sc.bmp", O_CREAT | O_WRONLY | O_TRUNC, 0700)))
@@ -93,7 +93,8 @@ int		save_bmp(t_game *g)
 	close(fd);
 	return (1);
 }
-void	start_save_bmp(t_game *g)
+
+void				start_save_bmp(t_game *g)
 {
 	if (!(save_bmp(g)))
 		ft_error(ERROR_OF_SAVE, g);

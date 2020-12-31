@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/30 11:07:21 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/30 14:58:54 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 21:04:49 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_error1(int err_code)
 	else if (err_code == SO_MANY_PLAYER_IN_MAP)
 		write(1, "Error: So Many Player In Map\n", 29);
 	else if (err_code == ERROR_OF_SAVE)
-		write(1, "Error: Unknown error to save process\n",37);
+		write(1, "Error: Unknown error to save process\n", 37);
 }
 
 void	ft_error(int err_code, t_game *g)

@@ -6,7 +6,7 @@
 #    By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/10/28 10:41:18 by junhypar          #+#    #+#              #
-#    Updated: 2020/12/31 14:38:20 by junhypar         ###   ########.fr        #
+#    Updated: 2020/12/31 21:12:16 by junhypar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS	= ./gnl/get_next_line.c ./gnl/get_next_line_utils.c ./utils/ft_get_radian.c
 
 SRCS_O	= ./game/ft_start_game.c main.c ./utils/map_available_test.c ./game/ray_casting.c ./game/item_control.c ./game/draw_wall.c
 
-SRCS_B	= ./bonus/ft_start_game.c ./bonus/main.c ./bonus/map_available_test.c ./bonus/start_bonus.c ./bonus/ray_casting.c ./bonus/extra_object_control.c ./bonus/extra_object_utils.c ./bonus/item_control.c ./bonus/object_action.c ./bonus/draw_wall.c ./bonus/draw_ex_wall.c
+SRCS_B	= ./bonus/ft_start_game.c ./bonus/main.c ./bonus/map_available_test.c ./bonus/start_bonus.c ./bonus/ray_casting.c ./bonus/extra_object_control.c ./bonus/extra_object_utils.c ./bonus/item_control.c ./bonus/object_action.c ./bonus/draw_wall.c ./bonus/draw_ex_wall.c ./bonus/secret_door.c ./bonus/draw_lv.c ./bonus/mouse_press_release.c ./bonus/reset_struct.c
 
 OBJS	= ${SRCS:.c=.o}
 

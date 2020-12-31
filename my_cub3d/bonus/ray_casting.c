@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/25 20:39:29 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/31 14:56:19 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 22:13:13 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	spread_ray(t_raycast *ray, t_game *g)
 		if (g->map[ray->y][ray->x] > '0')
 		{
 			if (g->map[ray->y][ray->x] == '1' || (g->map[ray->y][ray->x] >=
-					'3' && g->map[ray->y][ray->x] <= '6'))
+					'3' && g->map[ray->y][ray->x] <= '5'))
 				ray->hit = 1;
 		}
 	}

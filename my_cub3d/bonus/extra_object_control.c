@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:10:12 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/31 15:33:50 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 21:23:27 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,16 +124,16 @@ void			draw_ex_item(t_game *g)
 	int			i;
 
 	i = 0;
-	while (i < g->item_cnt + 1)
+	while (i < g->item_cnt + 2)
 	{
 		g->item_order[i] = i;
 		g->item_dist[i] = sqrt((g->x - g->item[i].x) * (g->x - g->item[i].x) +
-				(g->y - g->item[i].y) *	(g->y - g->item[i].y));
+				(g->y - g->item[i].y) * (g->y - g->item[i].y));
 		i++;
 	}
-	sort_items(g->item_order, g->item_dist, g->item_cnt + 1);
+	sort_items(g->item_order, g->item_dist, g->item_cnt + 2);
 	i = 0;
-	while (i < g->item_cnt + 1)
+	while (i < g->item_cnt + 2)
 	{
 		p.tex_num = g->item[g->item_order[i]].tex_num;
 		if (g->item[g->item_order[i]].flag && p.tex_num != EMPTY)
@@ -142,9 +142,7 @@ void			draw_ex_item(t_game *g)
 			set_sprite_painter(g, &p, i);
 		}
 		else if (p.tex_num != EMPTY)
-		{
 			draw_sprite(g, &p, i);
-		}
 		i++;
 	}
 }

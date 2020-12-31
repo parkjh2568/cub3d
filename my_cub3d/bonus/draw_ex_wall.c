@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_ex_wall.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: junhypar <junhypar@student.42seoul.kr      +#+  +:+       +#+        */
+/*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/31 14:30:53 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/31 14:39:03 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 21:21:53 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

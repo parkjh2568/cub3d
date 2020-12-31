@@ -6,12 +6,12 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 10:42:11 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/31 17:00:38 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 22:13:22 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D
-# define CUB3D
+#ifndef CUB3D_H
+# define CUB3D_H
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -67,8 +67,8 @@
 # define EX_OBJ_NUM 17
 # define JAVALA 0
 # define DRIFTER 1
-# define AUTO_DOOR 2
-# define SECRET_DOOR 3
+# define SECRET_DOOR 2
+# define DRAGEN 3
 # define BARRER 4
 # define TRAP 5
 # define POTION 6
@@ -76,7 +76,7 @@
 # define FIRE_GUN 8
 # define STATIC_ENERMY 9
 # define DEFEAT_ENERMY 10
-# define LV 11
+# define COPS_ENERMY 11
 # define ONE 12
 # define TWO 13
 # define THREE 14
@@ -88,190 +88,191 @@
 #  define BUFFER_SIZE 100
 # endif
 
-typedef struct	s_old_dig
+typedef struct		s_old_dig
 {
-	double		old_dir_x;
-	double		old_dir_y;
-	double		old_plan_x;
-	double		old_plan_y;
-}				t_old_dig;
+	double			old_dir_x;
+	double			old_dir_y;
+	double			old_plan_x;
+	double			old_plan_y;
+}					t_old_dig;
 
-typedef struct	s_img
+typedef struct		s_img
 {
-	void		*img;
-	int			*data;
-	char		*name;
-	int			size_l;
-	int			bpp;
-	int			endian;
-	int			width;
-	int			height;
-}				t_img;
+	void			*img;
+	int				*data;
+	char			*name;
+	int				size_l;
+	int				bpp;
+	int				endian;
+	int				width;
+	int				height;
+}					t_img;
 
-typedef struct	s_raycast
+typedef struct		s_raycast
 {
-	int x;
-	int y;
+	int				x;
+	int				y;
 
-	double		dir_x;
-	double		dir_y;
+	double			dir_x;
+	double			dir_y;
 
-	double		side_dist_x;
-	double		side_dist_y;
+	double			side_dist_x;
+	double			side_dist_y;
 
-	double		how_long;
-	int			wall_height;
+	double			how_long;
+	int				wall_height;
 
-	double		delta_x;
-	double		delta_y;
+	double			delta_x;
+	double			delta_y;
 
-	int			step_x;
-	int			step_y;
+	int				step_x;
+	int				step_y;
 
-	int			side;
-	int			hit;
+	int				side;
+	int				hit;
 
-	double		camera;
-	int			plan;
-}				t_raycast;
+	double			camera;
+	int				plan;
+}					t_raycast;
 
-typedef struct	s_painter
+typedef struct		s_painter
 {
-	double		u_div;
-	double		v_div;
-	double		v_move;
-	int			color;
-	int			d_start;
-	int			d_end;
-	int			d_start_x;
-	int			d_end_x;
-	int			tex_num;
-	double		wall_x;
-	double		spt_x;
-	double		spt_y;
-	double		inv;
-	double		trans_x;
-	double		trans_y;
-	int			spt_screen_x;
-	int			v_move_screen;
-	int			spt_height;
-	int			spt_width;
-	int			tex_x;
-	int			tex_y;
-	double		tex_pos;
-	double		step;
-	int			tex_width;
-	int			tex_height;
-	int			flag;
-}				t_painter;
+	double			u_div;
+	double			v_div;
+	double			v_move;
+	int				color;
+	int				d_start;
+	int				d_end;
+	int				d_start_x;
+	int				d_end_x;
+	int				tex_num;
+	double			wall_x;
+	double			spt_x;
+	double			spt_y;
+	double			inv;
+	double			trans_x;
+	double			trans_y;
+	int				spt_screen_x;
+	int				v_move_screen;
+	int				spt_height;
+	int				spt_width;
+	int				tex_x;
+	int				tex_y;
+	double			tex_pos;
+	double			step;
+	int				tex_width;
+	int				tex_height;
+	int				flag;
+}					t_painter;
 
-typedef	struct	s_item
+typedef	struct		s_item
 {
-	double		x;
-	double		y;
-	int			tex_num;
-	int			flag;
-	int			timer;
-}				t_item;
+	double			x;
+	double			y;
+	int				tex_num;
+	int				flag;
+	int				timer;
+}					t_item;
 
-typedef struct	s_pair
+typedef struct		s_pair
 {
-	double		first;
-	int			second;
-}				t_pair;
+	double			first;
+	int				second;
+}					t_pair;
 
-typedef	struct	s_tex_info
+typedef	struct		s_tex_info
 {
-	int			width;
-	int			height;
-}				t_tex_info;
+	int				width;
+	int				height;
+}					t_tex_info;
 
-typedef struct	s_game
+typedef struct		s_game
 {
-	void		*mlx;
-	void		*win;
-	t_img		img;
-	t_img		wall[WALL_NUM];
+	void			*mlx;
+	void			*win;
+	t_img			img;
+	t_img			wall[WALL_NUM];
 
-	int			**buf;
-	int			**texture;
+	int				**buf;
+	int				**texture;
 
-	int			**ex_texture;
-	t_tex_info	info_tex[EMPTY];
+	int				**ex_texture;
+	t_tex_info		info_tex[EMPTY];
 
-	double		*z_buf;
+	double			*z_buf;
 
-	int			hp;
-	int			lv;
-	int			exp;
+	int				hp;
+	int				lv;
+	int				exp;
+	int				old_mous_x;
+	int				old_mous_y;
+	int				save_flag;
 
-	int			save_flag;
+	int				key_trig[150];
 
-	int			key_trig[150];
+	int				click;
+	int				timer;
+	t_item			item[200];
+	int				item_order[200];
+	double			item_dist[200];
+	int				item_cnt;
 
-	int			click;
-	int			timer;
-	t_item		item[200];
-	int			item_order[200];
-	double		item_dist[200];
-	int			item_cnt;
+	unsigned int	bgcolor[2];
 
-	unsigned int bgcolor[2];
+	double			dir_x;
+	double			dir_y;
+	double			plan_x;
+	double			plan_y;
 
-	double		dir_x;
-	double		dir_y;
-	double		plan_x;
-	double		plan_y;
+	double			mov_speed;
+	double			rot_speed;
 
-	double		mov_speed;
-	double		rot_speed;
+	int				width;
+	int				height;
+	int				row;
+	int				col;
 
-	int			width;
-	int			height;
-	int			row;
-	int			col;
+	int				player_cnt;
+	double			x;
+	double			y;
+	int				flag;
 
-	int			player_cnt;
-	double		x;
-	double		y;
-	int			flag;
+	char			*map_all;
+	char			**map;
+}					t_game;
 
-	char		*map_all;
-	char		**map;
-}				t_game;
-
-int				get_next_line(int fd, char **line);
-double			get_radian(int deg);
-void			ft_error(int err_code, t_game *g);
-int				ft_read_map(t_game *g, char *map_name);
-int				map_resol(char *out, t_game *g);
-int				no_space(char *out, int i);
-int				skip_resol_word(char *out, int i, int flag);
-int				check_remain(char *out, int i);
-int				input_wall_name(char *out, t_game *g, int flag);
-int				word_dup(char *out, t_game *g, int i, int flag);
-int				input_bg_color(char *out, t_game *g, int flag);
-int				find_rest(char *out, int i);
-void			free_all(t_game *g);
-int				init_map(char *out, t_game *g);
-int				map_available_test(t_game *g);
-int				map_init_and_available_test(t_game *g);
-void			rotate_vector(t_game *g, int deg);
-void			ft_start_game(t_game *g);
-int				press_key(int key, t_game *g);
-int				release_key(int key, t_game *g);
-void			ft_key_press_up_down(t_game *g, int flag);
-void			ft_key_press_rot_left_right(t_game *g, int flag);
-void			ft_key_press_left_right(t_game *g, int flag);
-void			key_action(t_game *g);
-int				input_esc(t_game *g);
-void			ray_casting(t_game *g);
-void			put_in_texture(t_game *g);
-void			draw_bg(t_game *g);
-void			set_painter(t_game *g, t_raycast *ray, t_painter *p);
-void			draw_wall(t_game *g, t_raycast *ray, t_painter *p, int j);
-void			draw_item(t_game *g);
-int				set_bright(int color, t_game *g, int height);
-void			start_save_bmp(t_game *g);
-int				*config_width_height(int width, int height);
+int					get_next_line(int fd, char **line);
+double				get_radian(int deg);
+void				ft_error(int err_code, t_game *g);
+int					ft_read_map(t_game *g, char *map_name);
+int					map_resol(char *out, t_game *g);
+int					no_space(char *out, int i);
+int					skip_resol_word(char *out, int i, int flag);
+int					check_remain(char *out, int i);
+int					input_wall_name(char *out, t_game *g, int flag);
+int					word_dup(char *out, t_game *g, int i, int flag);
+int					input_bg_color(char *out, t_game *g, int flag);
+int					find_rest(char *out, int i);
+void				free_all(t_game *g);
+int					init_map(char *out, t_game *g);
+int					map_available_test(t_game *g);
+int					map_init_and_available_test(t_game *g);
+void				rotate_vector(t_game *g, int deg);
+void				ft_start_game(t_game *g);
+int					press_key(int key, t_game *g);
+int					release_key(int key, t_game *g);
+void				ft_key_press_up_down(t_game *g, int flag);
+void				ft_key_press_rot_left_right(t_game *g, int flag);
+void				ft_key_press_left_right(t_game *g, int flag);
+void				key_action(t_game *g);
+int					input_esc(t_game *g);
+void				ray_casting(t_game *g);
+void				put_in_texture(t_game *g);
+void				draw_bg(t_game *g);
+void				set_painter(t_game *g, t_raycast *ray, t_painter *p);
+void				draw_wall(t_game *g, t_raycast *ray, t_painter *p, int j);
+void				draw_item(t_game *g);
+int					set_bright(int color, t_game *g, int height);
+void				start_save_bmp(t_game *g);
+int					*config_width_height(int width, int height);
 #endif

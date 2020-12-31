@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:10:12 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/31 13:16:43 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 20:47:20 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ static void			draw_sprite_to_buf(t_game *g, t_painter *p, int x)
 	}
 }
 
-void			draw_item(t_game *g)
+void				draw_item(t_game *g)
 {
 	t_painter	p;
 	int			i;
@@ -128,9 +128,8 @@ void			draw_item(t_game *g)
 	while (i < g->item_cnt)
 	{
 		g->item_order[i] = i;
-		g->item_dist[i] = sqrt((g->x - g->item[i].x) *
-				(g->x - g->item[i].x) + (g->y - g->item[i].y) *
-				(g->y - g->item[i].y));
+		g->item_dist[i] = sqrt((g->x - g->item[i].x) * (g->x - g->item[i].x) +
+				(g->y - g->item[i].y) * (g->y - g->item[i].y));
 		i++;
 	}
 	sort_items(g->item_order, g->item_dist, g->item_cnt);

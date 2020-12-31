@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 15:28:55 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/31 16:11:08 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 21:30:56 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,14 @@ void	find_location_of_element(t_game *g, int i, int j, int flag)
 	}
 }
 
+void	map_available_test2(t_game *g, int i, int j)
+{
+	if (g->map[i][j] == '2')
+		find_location_of_element(g, i, j, 1);
+	else if ((g->map[i][j] > '5' && g->map[i][j] <= '9') || g->map[i][j] == 'M')
+		find_extra_object_location(g, i, j);
+}
+
 int		map_available_test(t_game *g)
 {
 	int i;
@@ -103,11 +111,8 @@ int		map_available_test(t_game *g)
 			if (g->map[i][j] == 'N' || g->map[i][j] == 'S' ||
 					g->map[i][j] == 'E' || g->map[i][j] == 'W')
 				find_location_of_element(g, i, j, 0);
-			else if (g->map[i][j] == '2')
-				find_location_of_element(g, i, j, 1);
-			else if ((g->map[i][j] > '6' && g->map[i][j] <= '9') ||
-					g->map[i][j] == 'M')
-				find_extra_object_location(g, i, j);
+			else
+				map_available_test2(g, i, j);
 			j++;
 		}
 		i++;

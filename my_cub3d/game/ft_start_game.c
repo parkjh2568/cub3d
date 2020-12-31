@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/25 17:32:51 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/31 12:07:46 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 20:50:02 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	set_field(t_game *g)
 void	ft_start_game(t_game *g)
 {
 	int	*data;
+
 	g->mlx = mlx_init();
 	data = config_width_height(g->width, g->height);
 	g->width = data[0];

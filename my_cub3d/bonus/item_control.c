@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/28 15:10:12 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/31 16:20:07 by junhypar         ###   ########.fr       */
+/*   Updated: 2020/12/31 21:17:18 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,27 +66,9 @@ static void			draw_sprite_to_buf(t_game *g, t_painter *p, int x)
 	}
 }
 
-void			check_div_move(t_game *g, t_painter *p)
+void				check_div_move2(t_game *g, t_painter *p)
 {
-	if (p->tex_num == 7)
-	{
-		p->u_div = 1.3;
-		p->v_div = 1.3;
-		p->v_move = g->height / 4;
-	}
-	else if (p->tex_num == 8)
-	{
-		p->u_div = 2;
-		p->v_div = 2;
-		p->v_move = g->height / 3;;
-	}
-	else if (p->tex_num == 10)
-	{
-		p->u_div = 50;
-		p->v_div = 30;
-		p->v_move = (double)g->height / 28;
-	}
-	else if (p->tex_num == 11)
+	if (p->tex_num == 11)
 	{
 		p->u_div = 20;
 		p->v_div = 20;
@@ -106,13 +88,37 @@ void			check_div_move(t_game *g, t_painter *p)
 	}
 	else
 	{
-		p->u_div = 3;
-		p->v_div = 3;
-		p->v_move = 0;
+		check_lv_cops_div(g, p);
 	}
 }
 
-void			draw_sprite(t_game *g, t_painter *p, int i)
+void				check_div_move(t_game *g, t_painter *p)
+{
+	if (p->tex_num == 7)
+	{
+		p->u_div = 1.3;
+		p->v_div = 1.3;
+		p->v_move = g->height / 4;
+	}
+	else if (p->tex_num == 8)
+	{
+		p->u_div = 2;
+		p->v_div = 2;
+		p->v_move = g->height / 3;
+	}
+	else if (p->tex_num == 10)
+	{
+		p->u_div = 50;
+		p->v_div = 30;
+		p->v_move = (double)g->height / 28;
+	}
+	else
+	{
+		check_div_move2(g, p);
+	}
+}
+
+void				draw_sprite(t_game *g, t_painter *p, int i)
 {
 	p->u_div = 1.3;
 	p->v_div = 1;

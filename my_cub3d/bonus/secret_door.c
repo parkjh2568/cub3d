@@ -1,31 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_width_height.c                                :+:      :+:    :+:   */
+/*   secret_door.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/30 23:37:05 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/31 20:47:45 by junhypar         ###   ########.fr       */
+/*   Created: 2020/12/31 18:47:16 by junhypar          #+#    #+#             */
+/*   Updated: 2020/12/31 21:14:41 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../mlx_beta/mlx.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "../cub3d.h"
+#include "./bonus.h"
 
-int		*config_width_height(int width, int height)
+void	secret_door(t_game *g)
 {
-	void	*mlx;
-	int		*data;
+	double	k;
 
-	data = malloc(sizeof(int) * 2);
-	mlx = mlx_init();
-	mlx_get_screen_size(mlx, &data[0], &data[1]);
-	if (width < data[0])
-		data[0] = width;
-	if (height < data[1])
-		data[1] = height;
-	return (data);
+	k = 0;
+	if (g->click == 1)
+	{
+		while (g->map[(int)(g->y + g->dir_y * k)][(int)(g->x +
+					g->dir_x * k)] == '0')
+		{
+			k += 1;
+			if (g->map[(int)(g->y + g->dir_y * k)][(int)(g->x +
+					g->dir_x * k)] == '5')
+			{
+				g->map[(int)(g->y + g->dir_y * k)][(int)(g->x +
+						g->dir_x * k)] = '0';
+				break ;
+			}
+		}
+	}
 }
