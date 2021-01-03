@@ -6,7 +6,7 @@
 /*   By: junhypar <junhypar@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/06 15:28:55 by junhypar          #+#    #+#             */
-/*   Updated: 2020/12/30 23:53:08 by junhypar         ###   ########.fr       */
+/*   Updated: 2021/01/03 10:10:31 by junhypar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,7 @@ int		map_available_test(t_game *g)
 		}
 		i++;
 	}
+	if (g->player_cnt != 1)
+		return (1);
 	return (0);
 }
